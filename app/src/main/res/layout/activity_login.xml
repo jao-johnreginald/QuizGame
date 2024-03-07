@@ -8,7 +8,7 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_login"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:contentDescription="@string/login_image"
@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/image_login">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,6 +41,7 @@
                 app:startIconDrawable="@drawable/ic_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_login_email"
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
                 app:startIconDrawable="@drawable/ic_lock">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_login_password"
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,7 +67,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_sign_in"
                 android:layout_width="250dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
@@ -105,12 +107,13 @@
             </LinearLayout>
 
             <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_google_sign_in"
                 android:layout_width="250dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -119,7 +122,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tv_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
