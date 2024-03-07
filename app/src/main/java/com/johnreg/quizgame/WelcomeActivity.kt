@@ -27,7 +27,7 @@ class WelcomeActivity : AppCompatActivity() {
         // This line of code will hold the process to be 5000 milliseconds, 5 seconds
         // And then execute the codes in the run function
         handler.postDelayed({
-            val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+            val intent = Intent(this@WelcomeActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, 5000)
