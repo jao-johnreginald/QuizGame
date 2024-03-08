@@ -2,8 +2,8 @@ package com.johnreg.quizgame
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.johnreg.quizgame.databinding.ActivitySignupBinding
 
@@ -38,14 +38,14 @@ class SignupActivity : AppCompatActivity() {
         // Add a Listener to this function to track the result of this operation
         authResultTask.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Snackbar.make(binding.root, "Your account has been created", Snackbar.LENGTH_LONG).show()
+                Toast.makeText(this, "Your account has been created", Toast.LENGTH_LONG).show()
                 finish()
                 // Make the ProgressBar invisible and the signup Button clickable
                 binding.pbSignup.visibility = View.INVISIBLE
                 binding.btnSignup.isClickable = true
             } else {
                 // Show the reason for the error
-                Snackbar.make(binding.root, "${task.exception?.localizedMessage}", Snackbar.LENGTH_LONG).show()
+                Toast.makeText(this, "${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
