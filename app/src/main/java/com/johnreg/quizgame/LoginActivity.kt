@@ -52,7 +52,10 @@ class LoginActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
+                // Create a thread using the Task class
+                // This thread will get the data from google in the background
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                // Start the login process using the task object
                 firebaseSignInWithGoogle(task)
             }
         }
@@ -109,11 +112,17 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseSignInWithGoogle(task: Task<GoogleSignInAccount>) {
         try {
+            // Do the sign in operation, do the sign in process using the Google API
             val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+            // Create an object from the AuthCredential class
+            // The idToken has a unique code for each device, we can tell which device is logged in
             val authCredential = GoogleAuthProvider.getCredential(account.idToken, null)
+            // Do the authentication process using the auth object created from the FirebaseAuth class
             auth.signInWithCredential(authCredential)
+            // start MainActivity
             startMainActivity()
         } catch (error: ApiException) {
+            // If there is a problem while receiving data from the API, take this error inside the catch block
             Toast.makeText(applicationContext, error.localizedMessage, Toast.LENGTH_LONG).show()
         }
     }
