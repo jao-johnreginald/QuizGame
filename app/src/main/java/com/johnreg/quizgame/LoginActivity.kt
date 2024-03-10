@@ -6,11 +6,16 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.johnreg.quizgame.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -80,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startMainActivity() {
-        Toast.makeText(this, "Welcome to Quiz Game", Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, "Welcome to Quiz Game", Toast.LENGTH_LONG).show()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -103,5 +108,31 @@ class LoginActivity : AppCompatActivity() {
         activityResultLauncher.launch(signInIntent)
     }
 
-    private fun registerActivityForGoogleSignIn() {}
+    private fun registerActivityForGoogleSignIn() {
+        activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val resultCode = result.resultCode
+            val data = result.data
+            if (resultCode == RESULT_OK && data != null) {
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+                firebaseSignInWithGoogle(task)
+            }
+        }
+    }
+
+    private fun firebaseSignInWithGoogle(task: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+            startMainActivity()
+            firebaseGoogleAccount(account)
+        } catch (error: ApiException) {
+            Toast.makeText(applicationContext, error.localizedMessage, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun firebaseGoogleAccount(account: GoogleSignInAccount) {
+        val authCredential = GoogleAuthProvider.getCredential(account.idToken, null)
+        auth.signInWithCredential(authCredential)
+    }
 }
