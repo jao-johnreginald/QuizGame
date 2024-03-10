@@ -22,6 +22,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+
     private val googleSignInClient: GoogleSignInClient by lazy {
         // Choose the standard google sign in method with the Builder method
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -33,16 +35,6 @@ class LoginActivity : AppCompatActivity() {
         GoogleSignIn.getClient(this, gso)
     }
 
-    private val activityResultLauncher: ActivityResultLauncher<Intent> by lazy {
-        // Register
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                firebaseSignInWithGoogle(task)
-            }
-        }
-    }
-
     private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +42,20 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeActivityResultLauncher()
         setGoogleButtonText()
         setButtonListeners()
+    }
+
+    private fun initializeActivityResultLauncher() {
+        activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                firebaseSignInWithGoogle(task)
+            }
+        }
     }
 
     private fun setGoogleButtonText() {
@@ -94,7 +98,11 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 startMainActivity()
             } else {
-                Toast.makeText(this, "${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    task.exception?.localizedMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
