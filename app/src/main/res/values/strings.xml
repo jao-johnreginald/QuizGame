@@ -12,4 +12,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="reset_my_password">Reset My Password</string>
     <string name="forgot_image">Forgot Image</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="request_id_token">604355569489-bq7a30facl6nkt4ipbsp4id2l2bd1hho.apps.googleusercontent.com</string>
 </resources>
