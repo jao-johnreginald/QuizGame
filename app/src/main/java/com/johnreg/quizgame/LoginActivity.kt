@@ -22,9 +22,26 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val googleSignInClient: GoogleSignInClient by lazy {
+        // Choose the standard google sign in method with the Builder method
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            // This method specifies that an id token for authenticating users is requested
+            .requestIdToken(getString(R.string.request_id_token))
+            // Ask the user for their email
+            .requestEmail().build()
+        // Create instance with the gso
+        GoogleSignIn.getClient(this, gso)
+    }
 
-    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private val activityResultLauncher: ActivityResultLauncher<Intent> by lazy {
+        // Register
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                firebaseSignInWithGoogle(task)
+            }
+        }
+    }
 
     private val auth = FirebaseAuth.getInstance()
 
@@ -33,6 +50,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setGoogleButtonText()
+        setButtonListeners()
+    }
+
+    private fun setGoogleButtonText() {
         // Access the TextView inside this button
         val textOfGoogleButton = binding.btnGoogleSignIn.getChildAt(0) as TextView
         textOfGoogleButton.apply {
@@ -40,17 +62,16 @@ class LoginActivity : AppCompatActivity() {
             setTextColor(Color.BLACK)
             textSize = 18F
         }
+    }
 
-        // Register
-        registerActivityForGoogleSignIn()
+    private fun setButtonListeners() {
+        binding.btnSignIn.setOnClickListener { signInUser() }
 
-        binding.btnSignIn.setOnClickListener {
-            val userEmail = binding.etLoginEmail.text.toString()
-            val userPassword = binding.etLoginPassword.text.toString()
-            signInUser(userEmail, userPassword)
+        binding.btnGoogleSignIn.setOnClickListener {
+            // Google sign in, can't run intent with startActivity, must use activityResultLauncher
+            val signInIntent = googleSignInClient.signInIntent
+            activityResultLauncher.launch(signInIntent)
         }
-
-        binding.btnGoogleSignIn.setOnClickListener { signInGoogle() }
 
         binding.tvSignUp.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
@@ -63,19 +84,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        // If the user is already logged in, write the operation to be done
-        if (auth.currentUser != null) {
-            startMainActivity()
-        }
-    }
-
-    private fun signInUser(userEmail: String, userPassword: String) {
-        // Compare the previously created account with the account currently entered
+    private fun signInUser() {
+        // Get the EditText values
+        val userEmail = binding.etLoginEmail.text.toString()
+        val userPassword = binding.etLoginPassword.text.toString()
+        // After signInWithEmailAndPassword() is completed, define the transactions to be performed
         auth.signInWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener { task ->
-            // If the transaction is completed, define the transactions to be performed
+            // If the email and password are correct -> start MainActivity, else -> show error message
             if (task.isSuccessful) {
                 startMainActivity()
             } else {
@@ -84,55 +99,22 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun startMainActivity() {
-        Toast.makeText(applicationContext, "Welcome to Quiz Game", Toast.LENGTH_LONG).show()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun signInGoogle() {
-        // Choose the standard google sign in method with the Builder method
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            // This method specifies that an id token for authenticating users is requested
-            .requestIdToken(getString(R.string.request_id_token))
-            // Ask the user for their email
-            .requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-        signIn()
-    }
-
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        // Can't run this intent with startActivity(), use activityResultLauncher
-        activityResultLauncher.launch(signInIntent)
-    }
-
-    private fun registerActivityForGoogleSignIn() {
-        activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            val resultCode = result.resultCode
-            val data = result.data
-            if (resultCode == RESULT_OK && data != null) {
-                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-                firebaseSignInWithGoogle(task)
-            }
-        }
-    }
-
     private fun firebaseSignInWithGoogle(task: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+            val authCredential = GoogleAuthProvider.getCredential(account.idToken, null)
+            auth.signInWithCredential(authCredential)
             startMainActivity()
-            firebaseGoogleAccount(account)
         } catch (error: ApiException) {
             Toast.makeText(applicationContext, error.localizedMessage, Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun firebaseGoogleAccount(account: GoogleSignInAccount) {
-        val authCredential = GoogleAuthProvider.getCredential(account.idToken, null)
-        auth.signInWithCredential(authCredential)
+    private fun startMainActivity() {
+        Toast.makeText(applicationContext, "Welcome to Quiz Game", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
+
 }

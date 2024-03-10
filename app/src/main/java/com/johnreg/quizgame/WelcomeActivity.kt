@@ -5,31 +5,47 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.johnreg.quizgame.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeBinding
 
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Animation
-        val alphaAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.splash_anim)
-        binding.tvSplash.startAnimation(alphaAnimation)
+        setAnimation()
+        setHandler()
+    }
 
-        // After applying this animation, the WelcomeActivity should be automatically closed
-        // And the MainActivity should be opened, we do this by creating a Handler
-        val handler = Handler(Looper.getMainLooper())
-        // This line of code will hold the process to be 5000 milliseconds, 5 seconds
-        // And then execute the codes in the run function
-        handler.postDelayed({
-            val intent = Intent(this@WelcomeActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+    private fun setAnimation() {
+        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.splash_anim)
+        binding.tvSplash.startAnimation(animation)
+    }
+
+    // After the animation, WelcomeActivity should close and MainActivity should open
+    // Create a Handler, process takes 5000 milliseconds or 5 seconds, then execute the codes
+    private fun setHandler() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            // If user is logged out -> start LoginActivity, else -> start MainActivity
+            if (auth.currentUser == null) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(applicationContext, "Welcome to Quiz Game", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }, 5000)
     }
+
 }
