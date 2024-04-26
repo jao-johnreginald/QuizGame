@@ -10,6 +10,7 @@ material = "1.11.0"
 activity = "1.8.2"
 constraintlayout = "2.1.4"
 firebaseBom = "32.7.3"
+firebaseDatabaseKtx = "20.3.1"
 playServicesAuth = "21.0.0"
 
 [libraries]
@@ -25,6 +26,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 # Play services
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 
