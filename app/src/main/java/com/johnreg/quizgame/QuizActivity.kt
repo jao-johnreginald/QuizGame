@@ -39,11 +39,12 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        gameLogic()
-
         binding.apply {
+            gameLogic()
+
             btnNext.setOnClickListener { gameLogic() }
             btnFinish.setOnClickListener {  }
+
             tvA.setOnClickListener {
                 userAnswer = "a"
                 if (correctAnswer == userAnswer) {
@@ -58,6 +59,7 @@ class QuizActivity : AppCompatActivity() {
                 }
                 disableClickableOfOptions()
             }
+
             tvB.setOnClickListener {
                 userAnswer = "b"
                 if (correctAnswer == userAnswer) {
@@ -72,6 +74,7 @@ class QuizActivity : AppCompatActivity() {
                 }
                 disableClickableOfOptions()
             }
+
             tvC.setOnClickListener {
                 userAnswer = "c"
                 if (correctAnswer == userAnswer) {
@@ -86,6 +89,7 @@ class QuizActivity : AppCompatActivity() {
                 }
                 disableClickableOfOptions()
             }
+
             tvD.setOnClickListener {
                 userAnswer = "d"
                 if (correctAnswer == userAnswer) {
@@ -103,7 +107,9 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    private fun gameLogic() {
+    private fun ActivityQuizBinding.gameLogic() {
+        restoreOptions()
+
         databaseReference.addValueEventListener(object : ValueEventListener {
             // Perform data retrieving, constantly monitors the database live
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -117,18 +123,15 @@ class QuizActivity : AppCompatActivity() {
                     answerD = snapshot.child("$questionNumber").child("d").value.toString()
                     correctAnswer = snapshot.child("$questionNumber").child("answer").value.toString()
 
-                    binding.apply {
-                        tvQuestion.text = question
-                        tvA.text = answerA
-                        tvB.text = answerB
-                        tvC.text = answerC
-                        tvD.text = answerD
-
-                        pbQuiz.visibility = View.INVISIBLE
-                        layoutInfo.visibility = View.VISIBLE
-                        layoutQuestion.visibility = View.VISIBLE
-                        layoutButtons.visibility = View.VISIBLE
-                    }
+                    tvQuestion.text = question
+                    tvA.text = answerA
+                    tvB.text = answerB
+                    tvC.text = answerC
+                    tvD.text = answerD
+                    pbQuiz.visibility = View.INVISIBLE
+                    layoutInfo.visibility = View.VISIBLE
+                    layoutQuestion.visibility = View.VISIBLE
+                    layoutButtons.visibility = View.VISIBLE
                 } else {
                     Toast.makeText(applicationContext, "You answered all the questions", Toast.LENGTH_SHORT).show()
                 }
@@ -156,6 +159,18 @@ class QuizActivity : AppCompatActivity() {
         tvB.isClickable = false
         tvC.isClickable = false
         tvD.isClickable = false
+    }
+
+    private fun ActivityQuizBinding.restoreOptions() {
+        tvA.setBackgroundColor(Color.WHITE)
+        tvB.setBackgroundColor(Color.WHITE)
+        tvC.setBackgroundColor(Color.WHITE)
+        tvD.setBackgroundColor(Color.WHITE)
+
+        tvA.isClickable = true
+        tvB.isClickable = true
+        tvC.isClickable = true
+        tvD.isClickable = true
     }
 
 }
