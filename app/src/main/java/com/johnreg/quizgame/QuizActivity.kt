@@ -2,6 +2,7 @@ package com.johnreg.quizgame
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,14 @@ class QuizActivity : AppCompatActivity() {
     private var userCorrect = 0
     private var userWrong = 0
 
+    private lateinit var timer: CountDownTimer
+    private var timerContinue = false
+    private var leftTime = TOTAL_TIME
+
+    companion object {
+        const val TOTAL_TIME = 25000L
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizBinding.inflate(layoutInflater)
@@ -42,10 +51,14 @@ class QuizActivity : AppCompatActivity() {
         binding.apply {
             gameLogic()
 
-            btnNext.setOnClickListener { gameLogic() }
+            btnNext.setOnClickListener {
+                resetTimer()
+                gameLogic()
+            }
             btnFinish.setOnClickListener {  }
 
             tvA.setOnClickListener {
+                pauseTimer()
                 userAnswer = "a"
                 if (correctAnswer == userAnswer) {
                     tvA.setBackgroundColor(Color.GREEN)
@@ -61,6 +74,7 @@ class QuizActivity : AppCompatActivity() {
             }
 
             tvB.setOnClickListener {
+                pauseTimer()
                 userAnswer = "b"
                 if (correctAnswer == userAnswer) {
                     tvB.setBackgroundColor(Color.GREEN)
@@ -76,6 +90,7 @@ class QuizActivity : AppCompatActivity() {
             }
 
             tvC.setOnClickListener {
+                pauseTimer()
                 userAnswer = "c"
                 if (correctAnswer == userAnswer) {
                     tvC.setBackgroundColor(Color.GREEN)
@@ -91,6 +106,7 @@ class QuizActivity : AppCompatActivity() {
             }
 
             tvD.setOnClickListener {
+                pauseTimer()
                 userAnswer = "d"
                 if (correctAnswer == userAnswer) {
                     tvD.setBackgroundColor(Color.GREEN)
@@ -132,6 +148,8 @@ class QuizActivity : AppCompatActivity() {
                     layoutInfo.visibility = View.VISIBLE
                     layoutQuestion.visibility = View.VISIBLE
                     layoutButtons.visibility = View.VISIBLE
+
+                    startTimer()
                 } else {
                     Toast.makeText(applicationContext, "You answered all the questions", Toast.LENGTH_SHORT).show()
                 }
@@ -171,6 +189,42 @@ class QuizActivity : AppCompatActivity() {
         tvB.isClickable = true
         tvC.isClickable = true
         tvD.isClickable = true
+    }
+
+    private fun ActivityQuizBinding.startTimer() {
+        timer = object : CountDownTimer(leftTime, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                leftTime = millisUntilFinished
+                updateCountDownText()
+            }
+
+            override fun onFinish() {
+                disableClickableOfOptions()
+                resetTimer()
+                updateCountDownText()
+                val message = "Sorry, Time is up! Continue with the next question."
+                tvQuestion.text = message
+                timerContinue = false
+            }
+        }.start()
+
+        timerContinue = true
+    }
+
+    private fun updateCountDownText() {
+        val remainingTime: Int = (leftTime / 1000).toInt()
+        binding.tvTime.text = remainingTime.toString()
+    }
+
+    private fun pauseTimer() {
+        timer.cancel()
+        timerContinue = false
+    }
+
+    private fun resetTimer() {
+        pauseTimer()
+        leftTime = TOTAL_TIME
+        updateCountDownText()
     }
 
 }
