@@ -1,11 +1,13 @@
 package com.johnreg.quizgame
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -39,6 +41,10 @@ class QuizActivity : AppCompatActivity() {
     private var timerContinue = false
     private var leftTime = TOTAL_TIME
 
+    private val auth = FirebaseAuth.getInstance()
+    private val user = auth.currentUser
+    private val scoreRef = database.reference
+
     companion object {
         const val TOTAL_TIME = 25000L
     }
@@ -55,7 +61,7 @@ class QuizActivity : AppCompatActivity() {
                 resetTimer()
                 gameLogic()
             }
-            btnFinish.setOnClickListener {  }
+            btnFinish.setOnClickListener { sendScore() }
 
             tvA.setOnClickListener {
                 pauseTimer()
@@ -225,6 +231,19 @@ class QuizActivity : AppCompatActivity() {
         pauseTimer()
         leftTime = TOTAL_TIME
         updateCountDownText()
+    }
+
+    private fun sendScore() {
+        user?.let {
+            val userUID = it.uid
+            scoreRef.child("scores").child(userUID).child("correct").setValue(userCorrect)
+            scoreRef.child("scores").child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Scores sent to database successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@QuizActivity, ResultActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
     }
 
 }
