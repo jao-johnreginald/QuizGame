@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -60,75 +61,30 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun setButtonListeners() {
+        binding.btnFinish.setOnClickListener { sendScore() }
         binding.btnNext.setOnClickListener {
             resetTimer()
             gameLogic()
         }
+        binding.tvA.setOnClickListener { buttonLogic(binding.tvA, "a") }
+        binding.tvB.setOnClickListener { buttonLogic(binding.tvB, "b") }
+        binding.tvC.setOnClickListener { buttonLogic(binding.tvC, "c") }
+        binding.tvD.setOnClickListener { buttonLogic(binding.tvD, "d") }
+    }
 
-        binding.btnFinish.setOnClickListener { sendScore() }
-
-        binding.tvA.setOnClickListener {
-            pauseTimer()
-            userAnswer = "a"
-            if (correctAnswer == userAnswer) {
-                binding.tvA.setBackgroundColor(Color.GREEN)
-                userCorrect++
-                binding.tvCorrect.text = userCorrect.toString()
-            } else {
-                binding.tvA.setBackgroundColor(Color.RED)
-                userWrong++
-                binding.tvWrong.text = userWrong.toString()
-                findAnswer()
-            }
-            disableClickableOfOptions()
-        }
-
-        binding.tvB.setOnClickListener {
-            pauseTimer()
-            userAnswer = "b"
-            if (correctAnswer == userAnswer) {
-                binding.tvB.setBackgroundColor(Color.GREEN)
-                userCorrect++
-                binding.tvCorrect.text = userCorrect.toString()
-            } else {
-                binding.tvB.setBackgroundColor(Color.RED)
-                userWrong++
-                binding.tvWrong.text = userWrong.toString()
-                findAnswer()
-            }
-            disableClickableOfOptions()
-        }
-
-        binding.tvC.setOnClickListener {
-            pauseTimer()
-            userAnswer = "c"
-            if (correctAnswer == userAnswer) {
-                binding.tvC.setBackgroundColor(Color.GREEN)
-                userCorrect++
-                binding.tvCorrect.text = userCorrect.toString()
-            } else {
-                binding.tvC.setBackgroundColor(Color.RED)
-                userWrong++
-                binding.tvWrong.text = userWrong.toString()
-                findAnswer()
-            }
-            disableClickableOfOptions()
-        }
-
-        binding.tvD.setOnClickListener {
-            pauseTimer()
-            userAnswer = "d"
-            if (correctAnswer == userAnswer) {
-                binding.tvD.setBackgroundColor(Color.GREEN)
-                userCorrect++
-                binding.tvCorrect.text = userCorrect.toString()
-            } else {
-                binding.tvD.setBackgroundColor(Color.RED)
-                userWrong++
-                binding.tvWrong.text = userWrong.toString()
-                findAnswer()
-            }
-            disableClickableOfOptions()
+    private fun buttonLogic(tvClicked: TextView, chosenAnswer: String) {
+        disableClickableOfOptions()
+        pauseTimer()
+        userAnswer = chosenAnswer
+        if (correctAnswer == userAnswer) {
+            tvClicked.setBackgroundColor(Color.GREEN)
+            userCorrect++
+            binding.tvCorrect.text = userCorrect.toString()
+        } else {
+            tvClicked.setBackgroundColor(Color.RED)
+            userWrong++
+            binding.tvWrong.text = userWrong.toString()
+            findAnswer()
         }
     }
 
