@@ -55,82 +55,84 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.apply {
+        gameLogic()
+        setButtonListeners()
+    }
+
+    private fun setButtonListeners() {
+        binding.btnNext.setOnClickListener {
+            resetTimer()
             gameLogic()
+        }
 
-            btnNext.setOnClickListener {
-                resetTimer()
-                gameLogic()
-            }
-            btnFinish.setOnClickListener { sendScore() }
+        binding.btnFinish.setOnClickListener { sendScore() }
 
-            tvA.setOnClickListener {
-                pauseTimer()
-                userAnswer = "a"
-                if (correctAnswer == userAnswer) {
-                    tvA.setBackgroundColor(Color.GREEN)
-                    userCorrect++
-                    tvCorrect.text = userCorrect.toString()
-                } else {
-                    tvA.setBackgroundColor(Color.RED)
-                    userWrong++
-                    tvWrong.text = userWrong.toString()
-                    findAnswer()
-                }
-                disableClickableOfOptions()
+        binding.tvA.setOnClickListener {
+            pauseTimer()
+            userAnswer = "a"
+            if (correctAnswer == userAnswer) {
+                binding.tvA.setBackgroundColor(Color.GREEN)
+                userCorrect++
+                binding.tvCorrect.text = userCorrect.toString()
+            } else {
+                binding.tvA.setBackgroundColor(Color.RED)
+                userWrong++
+                binding.tvWrong.text = userWrong.toString()
+                findAnswer()
             }
+            disableClickableOfOptions()
+        }
 
-            tvB.setOnClickListener {
-                pauseTimer()
-                userAnswer = "b"
-                if (correctAnswer == userAnswer) {
-                    tvB.setBackgroundColor(Color.GREEN)
-                    userCorrect++
-                    tvCorrect.text = userCorrect.toString()
-                } else {
-                    tvB.setBackgroundColor(Color.RED)
-                    userWrong++
-                    tvWrong.text = userWrong.toString()
-                    findAnswer()
-                }
-                disableClickableOfOptions()
+        binding.tvB.setOnClickListener {
+            pauseTimer()
+            userAnswer = "b"
+            if (correctAnswer == userAnswer) {
+                binding.tvB.setBackgroundColor(Color.GREEN)
+                userCorrect++
+                binding.tvCorrect.text = userCorrect.toString()
+            } else {
+                binding.tvB.setBackgroundColor(Color.RED)
+                userWrong++
+                binding.tvWrong.text = userWrong.toString()
+                findAnswer()
             }
+            disableClickableOfOptions()
+        }
 
-            tvC.setOnClickListener {
-                pauseTimer()
-                userAnswer = "c"
-                if (correctAnswer == userAnswer) {
-                    tvC.setBackgroundColor(Color.GREEN)
-                    userCorrect++
-                    tvCorrect.text = userCorrect.toString()
-                } else {
-                    tvC.setBackgroundColor(Color.RED)
-                    userWrong++
-                    tvWrong.text = userWrong.toString()
-                    findAnswer()
-                }
-                disableClickableOfOptions()
+        binding.tvC.setOnClickListener {
+            pauseTimer()
+            userAnswer = "c"
+            if (correctAnswer == userAnswer) {
+                binding.tvC.setBackgroundColor(Color.GREEN)
+                userCorrect++
+                binding.tvCorrect.text = userCorrect.toString()
+            } else {
+                binding.tvC.setBackgroundColor(Color.RED)
+                userWrong++
+                binding.tvWrong.text = userWrong.toString()
+                findAnswer()
             }
+            disableClickableOfOptions()
+        }
 
-            tvD.setOnClickListener {
-                pauseTimer()
-                userAnswer = "d"
-                if (correctAnswer == userAnswer) {
-                    tvD.setBackgroundColor(Color.GREEN)
-                    userCorrect++
-                    tvCorrect.text = userCorrect.toString()
-                } else {
-                    tvD.setBackgroundColor(Color.RED)
-                    userWrong++
-                    tvWrong.text = userWrong.toString()
-                    findAnswer()
-                }
-                disableClickableOfOptions()
+        binding.tvD.setOnClickListener {
+            pauseTimer()
+            userAnswer = "d"
+            if (correctAnswer == userAnswer) {
+                binding.tvD.setBackgroundColor(Color.GREEN)
+                userCorrect++
+                binding.tvCorrect.text = userCorrect.toString()
+            } else {
+                binding.tvD.setBackgroundColor(Color.RED)
+                userWrong++
+                binding.tvWrong.text = userWrong.toString()
+                findAnswer()
             }
+            disableClickableOfOptions()
         }
     }
 
-    private fun ActivityQuizBinding.gameLogic() {
+    private fun gameLogic() {
         restoreOptions()
 
         databaseReference.addValueEventListener(object : ValueEventListener {
@@ -146,15 +148,15 @@ class QuizActivity : AppCompatActivity() {
                     answerD = snapshot.child("$questionNumber").child("d").value.toString()
                     correctAnswer = snapshot.child("$questionNumber").child("answer").value.toString()
 
-                    tvQuestion.text = question
-                    tvA.text = answerA
-                    tvB.text = answerB
-                    tvC.text = answerC
-                    tvD.text = answerD
-                    pbQuiz.visibility = View.INVISIBLE
-                    layoutInfo.visibility = View.VISIBLE
-                    layoutQuestion.visibility = View.VISIBLE
-                    layoutButtons.visibility = View.VISIBLE
+                    binding.tvQuestion.text = question
+                    binding.tvA.text = answerA
+                    binding.tvB.text = answerB
+                    binding.tvC.text = answerC
+                    binding.tvD.text = answerD
+                    binding.pbQuiz.visibility = View.INVISIBLE
+                    binding.layoutInfo.visibility = View.VISIBLE
+                    binding.layoutQuestion.visibility = View.VISIBLE
+                    binding.layoutButtons.visibility = View.VISIBLE
 
                     startTimer()
                 } else {
@@ -183,35 +185,35 @@ class QuizActivity : AppCompatActivity() {
         })
     }
 
-    private fun ActivityQuizBinding.findAnswer() {
+    private fun findAnswer() {
         when (correctAnswer) {
-            "a" -> tvA.setBackgroundColor(Color.GREEN)
-            "b" -> tvB.setBackgroundColor(Color.GREEN)
-            "c" -> tvC.setBackgroundColor(Color.GREEN)
-            "d" -> tvD.setBackgroundColor(Color.GREEN)
+            "a" -> binding.tvA.setBackgroundColor(Color.GREEN)
+            "b" -> binding.tvB.setBackgroundColor(Color.GREEN)
+            "c" -> binding.tvC.setBackgroundColor(Color.GREEN)
+            "d" -> binding.tvD.setBackgroundColor(Color.GREEN)
         }
     }
 
-    private fun ActivityQuizBinding.disableClickableOfOptions() {
-        tvA.isClickable = false
-        tvB.isClickable = false
-        tvC.isClickable = false
-        tvD.isClickable = false
+    private fun disableClickableOfOptions() {
+        binding.tvA.isClickable = false
+        binding.tvB.isClickable = false
+        binding.tvC.isClickable = false
+        binding.tvD.isClickable = false
     }
 
-    private fun ActivityQuizBinding.restoreOptions() {
-        tvA.setBackgroundColor(Color.WHITE)
-        tvB.setBackgroundColor(Color.WHITE)
-        tvC.setBackgroundColor(Color.WHITE)
-        tvD.setBackgroundColor(Color.WHITE)
+    private fun restoreOptions() {
+        binding.tvA.setBackgroundColor(Color.WHITE)
+        binding.tvB.setBackgroundColor(Color.WHITE)
+        binding.tvC.setBackgroundColor(Color.WHITE)
+        binding.tvD.setBackgroundColor(Color.WHITE)
 
-        tvA.isClickable = true
-        tvB.isClickable = true
-        tvC.isClickable = true
-        tvD.isClickable = true
+        binding.tvA.isClickable = true
+        binding.tvB.isClickable = true
+        binding.tvC.isClickable = true
+        binding.tvD.isClickable = true
     }
 
-    private fun ActivityQuizBinding.startTimer() {
+    private fun startTimer() {
         timer = object : CountDownTimer(leftTime, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 leftTime = millisUntilFinished
@@ -223,7 +225,7 @@ class QuizActivity : AppCompatActivity() {
                 resetTimer()
                 updateCountDownText()
                 val message = "Sorry, Time is up! Continue with the next question."
-                tvQuestion.text = message
+                binding.tvQuestion.text = message
                 timerContinue = false
             }
         }.start()
