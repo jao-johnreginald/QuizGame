@@ -20,11 +20,16 @@ class QuizActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQuizBinding
 
-    // Reach the data under the 'questions' child
+    // Create the database object
     private val database = FirebaseDatabase.getInstance()
+
+    // Reach the data under the 'questions' child
     private val databaseReference = database.reference.child("questions")
 
-    // These will be assigned after the data gets retrieved
+    // Reach the data under the 'scores' child
+    private val scoreRef = database.reference
+
+    // Create the variables that we will assign when we retrieve the data out of the database
     private var question = ""
     private var answerA = ""
     private var answerB = ""
@@ -45,7 +50,6 @@ class QuizActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
-    private val scoreRef = database.reference
 
     companion object {
         const val TOTAL_TIME = 25000L
