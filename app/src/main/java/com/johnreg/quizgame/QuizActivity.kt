@@ -60,6 +60,7 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Call the gameLogic function in the onCreate function
         gameLogic()
         setButtonListeners()
     }
@@ -68,6 +69,7 @@ class QuizActivity : AppCompatActivity() {
         binding.btnFinish.setOnClickListener { sendScore() }
         binding.btnNext.setOnClickListener {
             resetTimer()
+            // Call the gameLogic function again when the user clicks the next button
             gameLogic()
         }
         binding.tvA.setOnClickListener { buttonLogic(binding.tvA, "a") }
@@ -92,15 +94,23 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
+    // Retrieve the data in this function
     private fun gameLogic() {
         restoreOptions()
 
+        // Use the databaseReference object we created above and the ValueEventListener interface
         databaseReference.addValueEventListener(object : ValueEventListener {
-            // Perform data retrieving, constantly monitors the database live
+            // Perform data retrieving in this method, this method also constantly monitors the database live
+            // When there's a change to the database, it instantly reflects to the application
             override fun onDataChange(snapshot: DataSnapshot) {
+                // Learn the total number of questions, using the snapshot object
                 questionCount = snapshot.childrenCount.toInt()
 
+                // Create an if condition here, the quiz should continue until the value of
+                // this questionNumber variable equals the number of questions in the database,
+                // that is the value of the questionCount variable, otherwise the quiz will end
                 if (questionNumber <= questionCount) {
+                    // Retrieve all the data under the 1st question
                     question = snapshot.child("$questionNumber").child("q").value.toString()
                     answerA = snapshot.child("$questionNumber").child("a").value.toString()
                     answerB = snapshot.child("$questionNumber").child("b").value.toString()
@@ -108,11 +118,15 @@ class QuizActivity : AppCompatActivity() {
                     answerD = snapshot.child("$questionNumber").child("d").value.toString()
                     correctAnswer = snapshot.child("$questionNumber").child("answer").value.toString()
 
+                    // Print the 1st question
                     binding.tvQuestion.text = question
                     binding.tvA.text = answerA
                     binding.tvB.text = answerB
                     binding.tvC.text = answerC
                     binding.tvD.text = answerD
+
+                    // After successfully retrieving the data, the ProgressBar
+                    // should now disappear and the components should be VISIBLE
                     binding.pbQuiz.visibility = View.INVISIBLE
                     binding.layoutInfo.visibility = View.VISIBLE
                     binding.layoutQuestion.visibility = View.VISIBLE
@@ -120,6 +134,7 @@ class QuizActivity : AppCompatActivity() {
 
                     startTimer()
                 } else {
+                    // When all the questions are finished, we will show a dialog window to the user
                     AlertDialog.Builder(this@QuizActivity)
                         .setTitle("Quiz Game")
                         .setMessage("Congratulations!!!\nYou have answered all the questions. Do you want to see the result?")
@@ -136,9 +151,11 @@ class QuizActivity : AppCompatActivity() {
                         .show()
                 }
 
+                // Each time the gameLogic function is called, the questionNumber
+                // will be increased by 1 until it's equal to the number of questions
                 questionNumber++
             }
-            // State if there is any action to be taken when data cannot be retrieved
+            // State if there's any action to be taken when data cannot be retrieved or an error occurs
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
             }
