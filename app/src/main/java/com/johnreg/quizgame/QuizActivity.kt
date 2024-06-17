@@ -39,8 +39,10 @@ class QuizActivity : AppCompatActivity() {
     private var questionCount = 0
     private var questionNumber = 1
 
-    // These will be assigned after an answer is chosen by the user
+    // Assign the user's answer to this variable
     private var userAnswer = ""
+
+    // Create other containers that hold the number of correct and incorrect answers of the user
     private var userCorrect = 0
     private var userWrong = 0
 
@@ -69,7 +71,7 @@ class QuizActivity : AppCompatActivity() {
         binding.btnFinish.setOnClickListener { sendScore() }
         binding.btnNext.setOnClickListener {
             resetTimer()
-            // Call the gameLogic function again when the user clicks the next button
+            // Call the gameLogic function again when the user clicks the 'next' Button
             gameLogic()
         }
         binding.tvA.setOnClickListener { buttonLogic(binding.tvA, "a") }
@@ -79,19 +81,30 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun buttonLogic(tvClicked: TextView, chosenAnswer: String) {
-        disableClickableOfOptions()
         pauseTimer()
+        // Receive the answer from the user
         userAnswer = chosenAnswer
+        // Check to see if these are correct
         if (correctAnswer == userAnswer) {
+            // Make the background of the TextView clicked GREEN with the setBackgroundColor function
             tvClicked.setBackgroundColor(Color.GREEN)
+            // Increase the value of the userCorrect
             userCorrect++
+            // Print the user's correct value on the TextView 'correct'
             binding.tvCorrect.text = userCorrect.toString()
         } else {
+            // Make the background of this TextView RED
             tvClicked.setBackgroundColor(Color.RED)
+            // Increase the value of the userWrong
             userWrong++
+            // Print the userWrong value on the TextView 'wrong'
             binding.tvWrong.text = userWrong.toString()
+            // Call the findAnswer function in the else block and show the correct answer in green
             findAnswer()
         }
+        // Once the user has answered, he should not select any options again until he clicks the 'next' Button
+        // After the user selects an option, we must disable the clicking feature of each option
+        disableClickableOfOptions()
     }
 
     // Retrieve the data in this function
