@@ -109,6 +109,7 @@ class QuizActivity : AppCompatActivity() {
 
     // Retrieve the data in this function
     private fun gameLogic() {
+        // The marking colors must be restored and the options must be clickable
         restoreOptions()
 
         // Use the databaseReference object we created above and the ValueEventListener interface
@@ -192,11 +193,13 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun restoreOptions() {
+        // Change the background color of the TextViews to WHITE
         binding.tvA.setBackgroundColor(Color.WHITE)
         binding.tvB.setBackgroundColor(Color.WHITE)
         binding.tvC.setBackgroundColor(Color.WHITE)
         binding.tvD.setBackgroundColor(Color.WHITE)
 
+        // Make those options clickable
         binding.tvA.isClickable = true
         binding.tvB.isClickable = true
         binding.tvC.isClickable = true
