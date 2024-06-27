@@ -46,15 +46,23 @@ class QuizActivity : AppCompatActivity() {
     private var userCorrect = 0
     private var userWrong = 0
 
+    // There is an abstract class in kotlin that we can use for the timer
+    // Its name is CountDownTimer class, call this class and create an object from this class
     private lateinit var timer: CountDownTimer
+
+    // This variable will show as false when the timer is not running and true when it is running
     private var timerContinue = false
+
+    // Use the leftTime value in the code, for now equal the initial value
     private var leftTime = TOTAL_TIME
 
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
     companion object {
-        const val TOTAL_TIME = 25000L
+        // Create a Long container to determine the initial value of time
+        // Define time in milliseconds in kotlin, in programming time is usually defined by Long
+        const val TOTAL_TIME = 30000L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -207,14 +215,29 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
+        /*
+        Initialize the CountDownTimer object, the CountDownTimer class takes 2 parameters
+        The first one is the initial value, it will be the leftTime
+        The second one is the countDownInterval value, write 1000
+        That means it will count down 1 second by 1 second
+        Also we have to add the .start() end of the scope of the CountDownTimer class
+         */
         timer = object : CountDownTimer(leftTime, 1000) {
+            // This is what we want the timer to do every second
             override fun onTick(millisUntilFinished: Long) {
+                // The onTick method will work until the 30 seconds are complete
                 leftTime = millisUntilFinished
+                // This method will update the TextView showing the duration
                 updateCountDownText()
             }
-
+            // Write what you want to do once the timer finishes
             override fun onFinish() {
                 disableClickableOfOptions()
+                /*
+                The timer should reset, the 'time' text needs to be updated, present that to the user
+                Write this message to the user on the 'question' TextView
+                Also the timerContinue boolean value must be false
+                 */
                 resetTimer()
                 updateCountDownText()
                 val message = "Sorry, Time is up! Continue with the next question."
@@ -223,6 +246,7 @@ class QuizActivity : AppCompatActivity() {
             }
         }.start()
 
+        // Set the time 'continue' value to true here (when the timer starts)
         timerContinue = true
     }
 
