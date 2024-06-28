@@ -78,6 +78,7 @@ class QuizActivity : AppCompatActivity() {
     private fun setButtonListeners() {
         binding.btnFinish.setOnClickListener { sendScore() }
         binding.btnNext.setOnClickListener {
+            // Before the gameLogic (startTimer) function, the timer needs to be reset
             resetTimer()
             // Call the gameLogic function again when the user clicks the 'next' Button
             gameLogic()
@@ -89,6 +90,7 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun buttonLogic(tvClicked: TextView, chosenAnswer: String) {
+        // When the user answers a question before the time runs out, the timer should stop
         pauseTimer()
         // Receive the answer from the user
         userAnswer = chosenAnswer
@@ -154,6 +156,7 @@ class QuizActivity : AppCompatActivity() {
                     binding.layoutQuestion.visibility = View.VISIBLE
                     binding.layoutButtons.visibility = View.VISIBLE
 
+                    // The timer will start whenever the gameLogic function is called
                     startTimer()
                 } else {
                     // When all the questions are finished, we will show a dialog window to the user
@@ -232,6 +235,7 @@ class QuizActivity : AppCompatActivity() {
             }
             // Write what you want to do once the timer finishes
             override fun onFinish() {
+                // The user cannot select an option after the time is up
                 disableClickableOfOptions()
                 /*
                 The timer should reset, the 'time' text needs to be updated, present that to the user
@@ -251,16 +255,22 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun updateCountDownText() {
+        // This will give us the value of the remainingTime in seconds, convert this value to an Integer
         val remainingTime: Int = (leftTime / 1000).toInt()
+        // Write this remainingTime Integer value on the 'time' text, every second the text will update
         binding.tvTime.text = remainingTime.toString()
     }
 
     private fun pauseTimer() {
+        // Pause the timer in this method, use the cancel function
         timer.cancel()
+        // Set the timerContinue value to true when the timer is running and false when it is not
         timerContinue = false
     }
 
     private fun resetTimer() {
+        // When the timer is reset, pause the timer, and the leftTime should equal the TOTAL_TIME value again
+        // This will set the timer for 30 seconds again, also the text should be updated
         pauseTimer()
         leftTime = TOTAL_TIME
         updateCountDownText()
