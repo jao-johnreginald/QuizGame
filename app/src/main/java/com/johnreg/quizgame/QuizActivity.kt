@@ -166,9 +166,12 @@ class QuizActivity : AppCompatActivity() {
                         .setMessage("Congratulations!!!\nYou have answered all the questions. Do you want to see the result?")
                         .setCancelable(false)
                         .setPositiveButton("See Result") { _, _ ->
+                            // The user's score should have been saved in the database
+                            // And then the ResultActivity should be opened
                             sendScore()
                         }
                         .setNegativeButton("Play Again") { _, _ ->
+                            // This page should close and the MainActivity should open
                             val intent = Intent(this@QuizActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
