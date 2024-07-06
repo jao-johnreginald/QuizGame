@@ -56,6 +56,7 @@ class QuizActivity : AppCompatActivity() {
     // Use the leftTime value in the code, for now equal the initial value
     private var leftTime = TOTAL_TIME
 
+    // Reach some information such as the email and the userUID of the user who logs in to the application
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
@@ -277,11 +278,15 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun sendScore() {
+        // Check that the user object is not null with the 'let' keyword
         user?.let {
+            // Get the UID code of the user who logged in to the application with the user.uid
             val userUID = it.uid
+            // Use the scoreRef object to send data (userCorrect, userWrong) to the database in Firebase
             scoreRef.child("scores").child(userUID).child("correct").setValue(userCorrect)
             scoreRef.child("scores").child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
                 Toast.makeText(applicationContext, "Scores sent to database successfully", Toast.LENGTH_SHORT).show()
+                // Close this page and open a new page when the scores will be displayed
                 val intent = Intent(this@QuizActivity, ResultActivity::class.java)
                 startActivity(intent)
                 finish()
