@@ -84,6 +84,11 @@ class QuizActivity : AppCompatActivity() {
             // Call the gameLogic function again when the user clicks the 'next' Button
             gameLogic()
         }
+
+        // Print the initial value of userCorrect and userWrong
+        binding.tvCorrect.text = userCorrect.toString()
+        binding.tvWrong.text = userWrong.toString()
+
         binding.tvA.setOnClickListener { onAnswerClicked(binding.tvA, "a") }
         binding.tvB.setOnClickListener { onAnswerClicked(binding.tvB, "b") }
         binding.tvC.setOnClickListener { onAnswerClicked(binding.tvC, "c") }
