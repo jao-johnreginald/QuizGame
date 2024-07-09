@@ -27,7 +27,7 @@ class QuizActivity : AppCompatActivity() {
     private val databaseReference = database.reference.child("questions")
 
     // Reach the data under the 'scores' child
-    private val scoreRef = database.reference
+    private val scoreRef = database.reference.child("scores")
 
     // Create the variables that we will assign when we retrieve the data out of the database
     private var question = ""
@@ -286,8 +286,8 @@ class QuizActivity : AppCompatActivity() {
             // Get the UID code of the user who logged in to the application with the user.uid
             val userUID = user.uid
             // Use the scoreRef object to send data (userCorrect, userWrong) to the database in Firebase
-            scoreRef.child("scores").child(userUID).child("correct").setValue(userCorrect)
-            scoreRef.child("scores").child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
+            scoreRef.child(userUID).child("correct").setValue(userCorrect)
+            scoreRef.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
                 Toast.makeText(applicationContext, "Scores sent to database successfully", Toast.LENGTH_SHORT).show()
                 // Close this page and open a new page when the scores will be displayed
                 val intent = Intent(this@QuizActivity, ResultActivity::class.java)
