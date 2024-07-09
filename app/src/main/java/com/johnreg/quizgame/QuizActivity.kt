@@ -288,7 +288,11 @@ class QuizActivity : AppCompatActivity() {
             // Use the scoreRef object to send data (userCorrect, userWrong) to the database in Firebase
             scoreRef.child(userUID).child("correct").setValue(userCorrect)
             scoreRef.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
-                Toast.makeText(applicationContext, "Scores sent to database successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Scores sent to database successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
                 // Close this page and open a new page when the scores will be displayed
                 val intent = Intent(this@QuizActivity, ResultActivity::class.java)
                 startActivity(intent)
