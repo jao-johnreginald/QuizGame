@@ -84,28 +84,28 @@ class QuizActivity : AppCompatActivity() {
             // Call the gameLogic function again when the user clicks the 'next' Button
             gameLogic()
         }
-        binding.tvA.setOnClickListener { buttonLogic(binding.tvA, "a") }
-        binding.tvB.setOnClickListener { buttonLogic(binding.tvB, "b") }
-        binding.tvC.setOnClickListener { buttonLogic(binding.tvC, "c") }
-        binding.tvD.setOnClickListener { buttonLogic(binding.tvD, "d") }
+        binding.tvA.setOnClickListener { onAnswerClicked(binding.tvA, "a") }
+        binding.tvB.setOnClickListener { onAnswerClicked(binding.tvB, "b") }
+        binding.tvC.setOnClickListener { onAnswerClicked(binding.tvC, "c") }
+        binding.tvD.setOnClickListener { onAnswerClicked(binding.tvD, "d") }
     }
 
-    private fun buttonLogic(tvClicked: TextView, chosenAnswer: String) {
+    private fun onAnswerClicked(textViewAnswer: TextView, answer: String) {
         // When the user answers a question before the time runs out, the timer should stop
         pauseTimer()
         // Receive the answer from the user
-        userAnswer = chosenAnswer
+        userAnswer = answer
         // Check to see if these are correct
         if (correctAnswer == userAnswer) {
-            // Make the background of the TextView clicked GREEN with the setBackgroundColor function
-            tvClicked.setBackgroundColor(Color.GREEN)
+            // Make the background of the textViewAnswer GREEN with the setBackgroundColor function
+            textViewAnswer.setBackgroundColor(Color.GREEN)
             // Increase the value of the userCorrect
             userCorrect++
             // Print the user's correct value on the TextView 'correct'
             binding.tvCorrect.text = userCorrect.toString()
         } else {
             // Make the background of this TextView RED
-            tvClicked.setBackgroundColor(Color.RED)
+            textViewAnswer.setBackgroundColor(Color.RED)
             // Increase the value of the userWrong
             userWrong++
             // Print the userWrong value on the TextView 'wrong'
