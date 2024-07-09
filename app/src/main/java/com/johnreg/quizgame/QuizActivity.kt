@@ -73,10 +73,10 @@ class QuizActivity : AppCompatActivity() {
 
         // Call the gameLogic function in the onCreate function
         gameLogic()
-        setButtonListeners()
+        setListenersAndTexts()
     }
 
-    private fun setButtonListeners() {
+    private fun setListenersAndTexts() {
         binding.btnFinish.setOnClickListener { sendScore() }
         binding.btnNext.setOnClickListener {
             // Before the gameLogic (startTimer) function, the timer needs to be reset
