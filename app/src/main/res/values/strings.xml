@@ -20,4 +20,7 @@
     <string name="wrong_answer">Wrong Answer: </string>
     <string name="finish">Finish</string>
     <string name="next">Next</string>
+    <string name="congratulations_image">Congratulations Image</string>
+    <string name="play_again">Play Again</string>
+    <string name="exit">Exit</string>
 </resources>
