@@ -46,6 +46,9 @@ class SignupActivity : AppCompatActivity() {
             } else {
                 // Show the reason for the error
                 Toast.makeText(this, "${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
+                // Make the ProgressBar invisible and the signup Button clickable
+                binding.pbSignup.visibility = View.INVISIBLE
+                binding.btnSignup.isClickable = true
             }
         }
     }
