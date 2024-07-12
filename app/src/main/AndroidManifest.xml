@@ -17,10 +17,12 @@
         <activity
             android:name=".ResultActivity"
             android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/SignupTheme" />
         <activity
             android:name=".QuizActivity"
             android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/SignupTheme" />
         <activity
             android:name=".ForgotPasswordActivity"
