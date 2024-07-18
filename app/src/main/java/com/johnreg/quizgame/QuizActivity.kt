@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.johnreg.quizgame.databinding.ActivityQuizBinding
+import kotlin.random.Random
 
 class QuizActivity : AppCompatActivity() {
 
@@ -37,7 +39,7 @@ class QuizActivity : AppCompatActivity() {
     private var answerD = ""
     private var correctAnswer = ""
     private var questionCount = 0
-    private var questionNumber = 1
+    private var questionNumber = 0
 
     // Assign the user's answer to this variable
     private var userAnswer = ""
@@ -60,6 +62,8 @@ class QuizActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
+    private val questions: HashSet<Int> = HashSet()
+
     companion object {
         // Create a Long container to determine the initial value of time
         // Define time in milliseconds in kotlin, in programming time is usually defined by Long
@@ -71,9 +75,19 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeHashSet()
         // Call the gameLogic function in the onCreate function
         gameLogic()
         setListenersAndTexts()
+    }
+
+    private fun initializeHashSet() {
+        do {
+            val number = Random.nextInt(1, 11)
+            questions.add(number)
+            Log.d("NumberGenerated", number.toString())
+        } while (questions.size < 5)
+        Log.d("NumberHashSet", questions.toString())
     }
 
     private fun setListenersAndTexts() {
@@ -139,14 +153,16 @@ class QuizActivity : AppCompatActivity() {
                 // Create an if condition here, the quiz should continue until the value of
                 // this questionNumber variable equals the number of questions in the database,
                 // that is the value of the questionCount variable, otherwise the quiz will end
-                if (questionNumber <= questionCount) {
+                if (questionNumber < questions.size) {
+                    val element = questions.elementAt(questionNumber)
+
                     // Retrieve all the data under the 1st question
-                    question = snapshot.child("$questionNumber").child("q").value.toString()
-                    answerA = snapshot.child("$questionNumber").child("a").value.toString()
-                    answerB = snapshot.child("$questionNumber").child("b").value.toString()
-                    answerC = snapshot.child("$questionNumber").child("c").value.toString()
-                    answerD = snapshot.child("$questionNumber").child("d").value.toString()
-                    correctAnswer = snapshot.child("$questionNumber").child("answer").value.toString()
+                    question = snapshot.child("$element").child("q").value.toString()
+                    answerA = snapshot.child("$element").child("a").value.toString()
+                    answerB = snapshot.child("$element").child("b").value.toString()
+                    answerC = snapshot.child("$element").child("c").value.toString()
+                    answerD = snapshot.child("$element").child("d").value.toString()
+                    correctAnswer = snapshot.child("$element").child("answer").value.toString()
 
                     // Print the 1st question
                     binding.tvQuestion.text = question
