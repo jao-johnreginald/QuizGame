@@ -50,9 +50,6 @@ class QuizActivity : AppCompatActivity() {
     // Its name is CountDownTimer class, call this class and create an object from this class
     private lateinit var timer: CountDownTimer
 
-    // This variable will show as false when the timer is not running and true when it is running
-    private var timerContinue = false
-
     // Use the leftTime value in the code, for now equal the initial value
     private var leftTime = TOTAL_TIME
 
@@ -114,7 +111,7 @@ class QuizActivity : AppCompatActivity() {
 
     private fun onAnswerClicked(textViewAnswer: TextView, answer: String) {
         // When the user answers a question before the time runs out, the timer should stop
-        pauseTimer()
+        timer.cancel()
         // Receive the answer from the user
         userAnswer = answer
         // Check to see if these are correct
@@ -271,12 +268,8 @@ class QuizActivity : AppCompatActivity() {
                 updateCountDownText()
                 val message = "Sorry, Time is up! Continue with the next question."
                 binding.tvQuestion.text = message
-                timerContinue = false
             }
         }.start()
-
-        // Set the time 'continue' value to true here (when the timer starts)
-        timerContinue = true
     }
 
     private fun updateCountDownText() {
@@ -286,17 +279,10 @@ class QuizActivity : AppCompatActivity() {
         binding.tvTime.text = remainingTime.toString()
     }
 
-    private fun pauseTimer() {
-        // Pause the timer in this method, use the cancel function
-        timer.cancel()
-        // Set the timerContinue value to true when the timer is running and false when it is not
-        timerContinue = false
-    }
-
     private fun resetTimer() {
         // When the timer is reset, pause the timer, and the leftTime should equal the TOTAL_TIME value again
         // This will set the timer for 30 seconds again, also the text should be updated
-        pauseTimer()
+        timer.cancel()
         leftTime = TOTAL_TIME
         updateCountDownText()
     }
