@@ -311,17 +311,18 @@ class QuizActivity : AppCompatActivity() {
             // Get the UID code of the user who logged in to the application with the user.uid
             val userUID = user.uid
             // Use the scoreRef object to send data (userCorrect, userWrong) to the database in Firebase
-            dataRefScores.child(userUID).child("correct").setValue(userCorrect)
-            dataRefScores.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
-                Toast.makeText(
-                    applicationContext,
-                    "Scores sent to database successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
-                // Close this page and open a new page when the scores will be displayed
-                val intent = Intent(this@QuizActivity, ResultActivity::class.java)
-                startActivity(intent)
-                finish()
+            dataRefScores.child(userUID).child("correct").setValue(userCorrect).addOnSuccessListener {
+                dataRefScores.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
+                    Toast.makeText(
+                        applicationContext,
+                        "Scores sent to database successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // Close this page and open a new page when the scores will be displayed
+                    val intent = Intent(this@QuizActivity, ResultActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }
