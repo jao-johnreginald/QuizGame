@@ -22,13 +22,11 @@ class QuizActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQuizBinding
 
-    // Create the database object
+    // Get the FirebaseDatabase instance
     private val database = FirebaseDatabase.getInstance()
 
-    // Reach the data under the 'questions' child
+    // Reach the data under the 'questions' and 'scores' child using the FirebaseDatabase instance
     private val databaseReference = database.reference.child("questions")
-
-    // Reach the data under the 'scores' child
     private val scoreRef = database.reference.child("scores")
 
     // Create the variables that we will assign when we retrieve the data out of the database
