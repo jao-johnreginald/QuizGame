@@ -309,10 +309,10 @@ class QuizActivity : AppCompatActivity() {
         // Check that the user object is not null with the 'let' keyword
         user?.let { user ->
             // Get the UID code of the user who logged in to the application with the user.uid
-            val userUID = user.uid
+            val uid = user.uid
             // Use the scoreRef object to send data (userCorrect, userWrong) to the database in Firebase
-            dataRefScores.child(userUID).child("correct").setValue(userCorrect).addOnSuccessListener {
-                dataRefScores.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
+            dataRefScores.child(uid).child("correct").setValue(userCorrect).addOnSuccessListener {
+                dataRefScores.child(uid).child("wrong").setValue(userWrong).addOnSuccessListener {
                     Toast.makeText(
                         applicationContext,
                         "Scores sent to database successfully",
