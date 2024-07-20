@@ -62,6 +62,8 @@ class QuizActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
+    // HashSet only considers one of the same elements ignoring all others
+    // Create an array from the HashSet class and transfer the randomly generated numbers to this array
     private val questions: HashSet<Int> = HashSet()
 
     companion object {
@@ -82,8 +84,11 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initializeHashSet() {
+        // Generate random numbers until the number of elements in the 'questions' array is 5
         do {
+            // Generate a random number between 1 and 10
             val number = Random.nextInt(1, 11)
+            // Pass this number to the HashSet of questions
             questions.add(number)
             Log.d("NumberGenerated", number.toString())
         } while (questions.size < 5)
@@ -154,6 +159,7 @@ class QuizActivity : AppCompatActivity() {
                 // this questionNumber variable equals the number of questions in the database,
                 // that is the value of the questionCount variable, otherwise the quiz will end
                 if (questionNumber < questions.size) {
+                    // Reach the elements of the HashSet array using the questionNumber variable
                     val element = questions.elementAt(questionNumber)
 
                     // Retrieve all the data under the 1st question
