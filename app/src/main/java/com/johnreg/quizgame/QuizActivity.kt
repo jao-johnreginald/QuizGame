@@ -23,11 +23,11 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuizBinding
 
     // Get the FirebaseDatabase instance
-    private val database = FirebaseDatabase.getInstance()
+    private val data = FirebaseDatabase.getInstance()
 
     // Reach the data under the 'questions' and 'scores' child using the FirebaseDatabase instance
-    private val databaseReference = database.reference.child("questions")
-    private val scoreRef = database.reference.child("scores")
+    private val dataRefQuestions = data.reference.child("questions")
+    private val dataRefScores = data.reference.child("scores")
 
     // Create the variables that we will assign when we retrieve the data out of the database
     private var question = ""
@@ -146,7 +146,7 @@ class QuizActivity : AppCompatActivity() {
         restoreOptions()
 
         // Use the databaseReference object we created above and the ValueEventListener interface
-        databaseReference.addValueEventListener(object : ValueEventListener {
+        dataRefQuestions.addValueEventListener(object : ValueEventListener {
             // Perform data retrieving in this method, this method also constantly monitors the database live
             // When there's a change to the database, it instantly reflects to the application
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -311,8 +311,8 @@ class QuizActivity : AppCompatActivity() {
             // Get the UID code of the user who logged in to the application with the user.uid
             val userUID = user.uid
             // Use the scoreRef object to send data (userCorrect, userWrong) to the database in Firebase
-            scoreRef.child(userUID).child("correct").setValue(userCorrect)
-            scoreRef.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
+            dataRefScores.child(userUID).child("correct").setValue(userCorrect)
+            dataRefScores.child(userUID).child("wrong").setValue(userWrong).addOnSuccessListener {
                 Toast.makeText(
                     applicationContext,
                     "Scores sent to database successfully",
