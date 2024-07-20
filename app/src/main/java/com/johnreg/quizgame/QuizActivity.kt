@@ -132,8 +132,13 @@ class QuizActivity : AppCompatActivity() {
             userWrong++
             // Print the userWrong value on the TextView 'wrong'
             binding.tvWrong.text = userWrong.toString()
-            // Call the findAnswer function in the else block and show the correct answer in green
-            findAnswer()
+            // Show the correct answer in green
+            when (correctAnswer) {
+                "a" -> binding.tvA.setBackgroundColor(Color.GREEN)
+                "b" -> binding.tvB.setBackgroundColor(Color.GREEN)
+                "c" -> binding.tvC.setBackgroundColor(Color.GREEN)
+                "d" -> binding.tvD.setBackgroundColor(Color.GREEN)
+            }
         }
         // Once the user has answered, he should not select any options again until he clicks the 'next' Button
         // After the user selects an option, we must disable the clicking feature of each option
@@ -214,15 +219,6 @@ class QuizActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
             }
         })
-    }
-
-    private fun findAnswer() {
-        when (correctAnswer) {
-            "a" -> binding.tvA.setBackgroundColor(Color.GREEN)
-            "b" -> binding.tvB.setBackgroundColor(Color.GREEN)
-            "c" -> binding.tvC.setBackgroundColor(Color.GREEN)
-            "d" -> binding.tvD.setBackgroundColor(Color.GREEN)
-        }
     }
 
     private fun disableClickableOfOptions() {
