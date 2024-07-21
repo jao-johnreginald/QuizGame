@@ -100,13 +100,13 @@ class QuizActivity : AppCompatActivity() {
         binding.tvCorrect.text = userCorrect.toString()
         binding.tvWrong.text = userWrong.toString()
 
-        binding.tvA.setOnClickListener { onAnswerClicked(binding.tvA, "a") }
-        binding.tvB.setOnClickListener { onAnswerClicked(binding.tvB, "b") }
-        binding.tvC.setOnClickListener { onAnswerClicked(binding.tvC, "c") }
-        binding.tvD.setOnClickListener { onAnswerClicked(binding.tvD, "d") }
+        binding.tvA.setOnClickListener { onAnswerClicked("a", binding.tvA) }
+        binding.tvB.setOnClickListener { onAnswerClicked("b", binding.tvB) }
+        binding.tvC.setOnClickListener { onAnswerClicked("c", binding.tvC) }
+        binding.tvD.setOnClickListener { onAnswerClicked("d", binding.tvD) }
     }
 
-    private fun onAnswerClicked(textViewAnswer: TextView, userAnswer: String) {
+    private fun onAnswerClicked(userAnswer: String, textViewAnswer: TextView) {
         // When the user answers a question before the time runs out, the timer should stop
         timer.cancel()
         // Receive the answer from the user, check to see if these are correct
