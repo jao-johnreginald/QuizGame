@@ -107,8 +107,9 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun onAnswerClicked(userAnswer: String, textViewAnswer: TextView) {
-        // When the user answers a question before the time runs out, the timer should stop
+        // Stop the timer, disable the clicking feature of each option until the 'next' Button is clicked
         timer.cancel()
+        disableClickableOfOptions()
         // Receive the answer from the user, check to see if these are correct
         if (userAnswer == correctAnswer) {
             // Make the background of the textViewAnswer GREEN with the setBackgroundColor function
@@ -132,9 +133,6 @@ class QuizActivity : AppCompatActivity() {
                 "d" -> binding.tvD.setBackgroundColor(Color.GREEN)
             }
         }
-        // Once the user has answered, he should not select any options again until he clicks the 'next' Button
-        // After the user selects an option, we must disable the clicking feature of each option
-        disableClickableOfOptions()
     }
 
     // Retrieve the data in this function
