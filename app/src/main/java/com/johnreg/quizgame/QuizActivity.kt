@@ -110,7 +110,7 @@ class QuizActivity : AppCompatActivity() {
         // When the user answers a question before the time runs out, the timer should stop
         timer.cancel()
         // Receive the answer from the user, check to see if these are correct
-        if (correctAnswer == userAnswer) {
+        if (userAnswer == correctAnswer) {
             // Make the background of the textViewAnswer GREEN with the setBackgroundColor function
             textViewAnswer.setBackgroundColor(Color.GREEN)
             // Increase the value of the userCorrect
