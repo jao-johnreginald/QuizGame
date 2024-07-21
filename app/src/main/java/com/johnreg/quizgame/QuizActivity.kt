@@ -250,22 +250,18 @@ class QuizActivity : AppCompatActivity() {
         timer = object : CountDownTimer(leftTime, 1000) {
             // This is what we want the timer to do every second
             override fun onTick(millisUntilFinished: Long) {
-                // The onTick method will work until the 30 seconds are complete
+                // The onTick method will work until the TOTAL_TIME seconds are complete
                 leftTime = millisUntilFinished
-                // This method will update the TextView showing the duration
+                // Update the TextView showing the duration
                 updateCountDownText()
             }
             // Write what you want to do once the timer finishes
             override fun onFinish() {
                 // The user cannot select an option after the time is up
                 disableClickableOfOptions()
-                /*
-                The timer should reset, the 'time' text needs to be updated, present that to the user
-                Write this message to the user on the 'question' TextView
-                Also the timerContinue boolean value must be false
-                 */
+                // The timer should reset, also the 'time' text needs to be updated
                 resetTimer()
-                updateCountDownText()
+                // Write this message to the user on the 'question' TextView
                 val message = "Sorry, Time is up! Continue with the next question."
                 binding.tvQuestion.text = message
             }
@@ -273,15 +269,14 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun updateCountDownText() {
-        // This will give us the value of the remainingTime in seconds, convert this value to an Integer
+        // Get the value of the remainingTime in seconds, convert this value to an Integer
         val remainingTime: Int = (leftTime / 1000).toInt()
         // Write this remainingTime Integer value on the 'time' text, every second the text will update
         binding.tvTime.text = remainingTime.toString()
     }
 
     private fun resetTimer() {
-        // When the timer is reset, pause the timer, and the leftTime should equal the TOTAL_TIME value again
-        // This will set the timer for 30 seconds again, also the text should be updated
+        // Pause the timer, set the timer to TOTAL_TIME seconds again, update the text
         timer.cancel()
         leftTime = TOTAL_TIME
         updateCountDownText()
