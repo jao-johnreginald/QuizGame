@@ -39,9 +39,6 @@ class QuizActivity : AppCompatActivity() {
     private var questionCount = 0
     private var questionNumber = 0
 
-    // Assign the user's answer to this variable
-    private var userAnswer = ""
-
     // Create other containers that hold the number of correct and incorrect answers of the user
     private var userCorrect = 0
     private var userWrong = 0
@@ -109,12 +106,10 @@ class QuizActivity : AppCompatActivity() {
         binding.tvD.setOnClickListener { onAnswerClicked(binding.tvD, "d") }
     }
 
-    private fun onAnswerClicked(textViewAnswer: TextView, answer: String) {
+    private fun onAnswerClicked(textViewAnswer: TextView, userAnswer: String) {
         // When the user answers a question before the time runs out, the timer should stop
         timer.cancel()
-        // Receive the answer from the user
-        userAnswer = answer
-        // Check to see if these are correct
+        // Receive the answer from the user, check to see if these are correct
         if (correctAnswer == userAnswer) {
             // Make the background of the textViewAnswer GREEN with the setBackgroundColor function
             textViewAnswer.setBackgroundColor(Color.GREEN)
