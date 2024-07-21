@@ -112,16 +112,14 @@ class QuizActivity : AppCompatActivity() {
         disableClickableOfOptions()
         // Receive the answer from the user, check to see if these are correct
         if (userAnswer == correctAnswer) {
-            // Make the background of the textViewAnswer GREEN with the setBackgroundColor function
+            // Make the background of the textViewAnswer GREEN, increase the value of the userCorrect
             textViewAnswer.setBackgroundColor(Color.GREEN)
-            // Increase the value of the userCorrect
             userCorrect++
-            // Print the user's correct value on the TextView 'correct'
+            // Print the userCorrect value on the TextView 'correct'
             binding.tvCorrect.text = userCorrect.toString()
         } else {
-            // Make the background of this TextView RED
+            // Make the background of the textViewAnswer RED, increase the value of the userWrong
             textViewAnswer.setBackgroundColor(Color.RED)
-            // Increase the value of the userWrong
             userWrong++
             // Print the userWrong value on the TextView 'wrong'
             binding.tvWrong.text = userWrong.toString()
