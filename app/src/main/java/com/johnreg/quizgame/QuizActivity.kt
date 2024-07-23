@@ -59,6 +59,7 @@ class QuizActivity : AppCompatActivity() {
     private val questions: HashSet<Int> = HashSet()
 
     companion object {
+        const val QUESTIONS_TO_SHOW = 5
         // Create a Long container to determine the initial value of time
         // Define time in milliseconds in kotlin, in programming time is usually defined by Long
         const val TOTAL_TIME = 30000L
@@ -76,14 +77,14 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initializeHashSet() {
-        // Generate random numbers until the number of elements in the 'questions' array is 5
+        // Generate random numbers until the number of elements in the 'questions' array is QUESTIONS_TO_SHOW
         do {
             // Generate a random number between 1 and 10
             val number = Random.nextInt(1, 11)
             // Pass this number to the HashSet of questions
             questions.add(number)
             Log.d("NumberGenerated", number.toString())
-        } while (questions.size < 5)
+        } while (questions.size < QUESTIONS_TO_SHOW)
         Log.d("NumberHashSet", questions.toString())
     }
 
