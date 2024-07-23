@@ -267,7 +267,7 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun resetTimer() {
-        // Pause the timer, set the timer to TOTAL_TIME seconds again, update the text
+        // Pause the timer, set the timer for TOTAL_TIME seconds again, update the text
         timer.cancel()
         leftTime = TOTAL_TIME
         updateCountDownText()
