@@ -70,10 +70,10 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setListenersAndTexts()
         initializeHashSet()
         // Call the gameLogic function in the onCreate function
         gameLogic()
-        setListenersAndTexts()
     }
 
     private fun initializeHashSet() {
@@ -89,14 +89,6 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun setListenersAndTexts() {
-        binding.btnFinish.setOnClickListener { sendScore() }
-        binding.btnNext.setOnClickListener {
-            // Before the gameLogic (startTimer) function, the timer needs to be reset
-            resetTimer()
-            // Call the gameLogic function again when the user clicks the 'next' Button
-            gameLogic()
-        }
-
         // Print the initial value of userCorrect and userWrong
         binding.tvCorrect.text = userCorrect.toString()
         binding.tvWrong.text = userWrong.toString()
@@ -105,6 +97,14 @@ class QuizActivity : AppCompatActivity() {
         binding.tvB.setOnClickListener { onAnswerClicked("b", binding.tvB) }
         binding.tvC.setOnClickListener { onAnswerClicked("c", binding.tvC) }
         binding.tvD.setOnClickListener { onAnswerClicked("d", binding.tvD) }
+
+        binding.btnNext.setOnClickListener {
+            // Before the gameLogic (startTimer) function, the timer needs to be reset
+            resetTimer()
+            // Call the gameLogic function again when the user clicks the 'next' Button
+            gameLogic()
+        }
+        binding.btnFinish.setOnClickListener { sendScore() }
     }
 
     private fun onAnswerClicked(userAnswer: String, textViewAnswer: TextView) {
