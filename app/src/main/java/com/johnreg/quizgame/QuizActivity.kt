@@ -237,17 +237,17 @@ class QuizActivity : AppCompatActivity() {
         The first one is the initial value, it will be the leftTime
         The second one is the countDownInterval value, write 1000
         That means it will count down 1 second by 1 second
-        Also we have to add the .start() end of the scope of the CountDownTimer class
+        Also add the .start() end of the scope of the CountDownTimer class
          */
         timer = object : CountDownTimer(leftTime, 1000) {
-            // This is what we want the timer to do every second
+            // This is what the timer does every second
             override fun onTick(millisUntilFinished: Long) {
                 // The onTick method will work until the TOTAL_TIME seconds are complete
                 leftTime = millisUntilFinished
                 // Update the TextView showing the duration
                 updateCountDownText()
             }
-            // Write what you want to do once the timer finishes
+            // Write what to do once the timer finishes
             override fun onFinish() {
                 // The user cannot select an option after the time is up
                 disableClickableOfOptions()
