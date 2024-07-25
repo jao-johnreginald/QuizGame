@@ -37,7 +37,6 @@ class QuizActivity : AppCompatActivity() {
     private var answerD = ""
     private var correctAnswer = ""
     private var questionCount = 0
-    private var questionNumber = 0
 
     // Create other containers that hold the number of correct and incorrect answers of the user
     private var userCorrect = 0
@@ -57,6 +56,7 @@ class QuizActivity : AppCompatActivity() {
     // HashSet only considers one of the same elements ignoring all others
     // Create an array from the HashSet class and transfer the randomly generated numbers to this array
     private val questions: HashSet<Int> = HashSet()
+    private var index = 0
 
     companion object {
         const val QUESTIONS_TO_SHOW = 5
@@ -149,9 +149,9 @@ class QuizActivity : AppCompatActivity() {
                 // Create an if condition here, the quiz should continue until the value of
                 // this questionNumber variable equals the number of questions in the database,
                 // that is the value of the questionCount variable, otherwise the quiz will end
-                if (questionNumber < questions.size) {
+                if (index < questions.size) {
                     // Reach the elements of the HashSet array using the questionNumber variable
-                    val element = questions.elementAt(questionNumber)
+                    val element = questions.elementAt(index)
 
                     // Retrieve all the data under the 1st question
                     question = snapshot.child("$element").child("q").value.toString()
@@ -198,7 +198,7 @@ class QuizActivity : AppCompatActivity() {
 
                 // Each time the gameLogic function is called, the questionNumber
                 // will be increased by 1 until it's equal to the number of questions
-                questionNumber++
+                index++
             }
             // State if there's any action to be taken when data cannot be retrieved or an error occurs
             override fun onCancelled(error: DatabaseError) {
