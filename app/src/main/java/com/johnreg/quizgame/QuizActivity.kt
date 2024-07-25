@@ -139,10 +139,9 @@ class QuizActivity : AppCompatActivity() {
         // The marking colors must be restored and the options must be clickable
         restoreOptions()
 
-        // Use the databaseReference object we created above and the ValueEventListener interface
+        // Use the DatabaseReference object created above and the ValueEventListener interface
         dataRefQuestions.addValueEventListener(object : ValueEventListener {
-            // Perform data retrieving in this method, this method also constantly monitors the database live
-            // When there's a change to the database, it instantly reflects to the application
+            // Perform data retrieving, also constantly monitors the database live
             override fun onDataChange(snapshot: DataSnapshot) {
                 // Learn the total number of questions, using the snapshot object
                 questionCount = snapshot.childrenCount.toInt()
@@ -169,8 +168,7 @@ class QuizActivity : AppCompatActivity() {
                     binding.tvC.text = answerC
                     binding.tvD.text = answerD
 
-                    // After successfully retrieving the data, the ProgressBar
-                    // should now disappear and the components should be VISIBLE
+                    // The ProgressBar should now disappear and the components should be VISIBLE
                     binding.pbQuiz.visibility = View.INVISIBLE
                     binding.layoutInfo.visibility = View.VISIBLE
                     binding.layoutQuestion.visibility = View.VISIBLE
@@ -179,18 +177,17 @@ class QuizActivity : AppCompatActivity() {
                     // The timer will start whenever the gameLogic function is called
                     startTimer()
                 } else {
-                    // When all the questions are finished, we will show a dialog window to the user
+                    // When all the questions are finished, show a dialog window to the user
                     AlertDialog.Builder(this@QuizActivity)
                         .setTitle("Quiz Game")
                         .setMessage("Congratulations!!!\nYou have answered all the questions. Do you want to see the result?")
                         .setCancelable(false)
                         .setPositiveButton("See Result") { _, _ ->
-                            // The user's score should have been saved in the database
-                            // And then the ResultActivity should be opened
+                            // Save the user's score in the database and open the ResultActivity
                             sendScore()
                         }
                         .setNegativeButton("Play Again") { _, _ ->
-                            // This page should close and the MainActivity should open
+                            // Close this page and open the MainActivity
                             val intent = Intent(this@QuizActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
