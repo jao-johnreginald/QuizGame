@@ -146,14 +146,12 @@ class QuizActivity : AppCompatActivity() {
                 // Learn the total number of questions, using the snapshot object
                 questionCount = snapshot.childrenCount.toInt()
 
-                // Create an if condition here, the quiz should continue until the value of
-                // this questionNumber variable equals the number of questions in the database,
-                // that is the value of the questionCount variable, otherwise the quiz will end
+                // Continue the quiz until the index equals the questions.size, otherwise end the quiz
                 if (index < questions.size) {
-                    // Reach the elements of the HashSet array using the questionNumber variable
+                    // Reach the elements of the HashSet array using the index variable
                     val element = questions.elementAt(index)
 
-                    // Retrieve all the data under the 1st question
+                    // Retrieve all the data under the element
                     question = snapshot.child("$element").child("q").value.toString()
                     answerA = snapshot.child("$element").child("a").value.toString()
                     answerB = snapshot.child("$element").child("b").value.toString()
@@ -161,7 +159,7 @@ class QuizActivity : AppCompatActivity() {
                     answerD = snapshot.child("$element").child("d").value.toString()
                     correctAnswer = snapshot.child("$element").child("answer").value.toString()
 
-                    // Print the 1st question
+                    // Print the data under the element
                     binding.tvQuestion.text = question
                     binding.tvA.text = answerA
                     binding.tvB.text = answerB
@@ -174,7 +172,7 @@ class QuizActivity : AppCompatActivity() {
                     binding.layoutQuestion.visibility = View.VISIBLE
                     binding.layoutButtons.visibility = View.VISIBLE
 
-                    // The timer will start whenever the gameLogic function is called
+                    // The timer will start only after the data is done being retrieved
                     startTimer()
                 } else {
                     // When all the questions are finished, show a dialog window to the user
@@ -196,8 +194,7 @@ class QuizActivity : AppCompatActivity() {
                         .show()
                 }
 
-                // Each time the gameLogic function is called, the questionNumber
-                // will be increased by 1 until it's equal to the number of questions
+                // Increase the index by 1 until it's equal to the number of elements in the HashSet
                 index++
             }
             // State if there's any action to be taken when data cannot be retrieved or an error occurs
