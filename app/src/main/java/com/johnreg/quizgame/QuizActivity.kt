@@ -174,6 +174,9 @@ class QuizActivity : AppCompatActivity() {
 
                     // The timer will start only after the data is done being retrieved
                     startTimer()
+
+                    // Increase the index by 1 until it's equal to the number of elements in the HashSet
+                    index++
                 } else {
                     // When all the questions are finished, show a dialog window to the user
                     AlertDialog.Builder(this@QuizActivity)
@@ -193,9 +196,6 @@ class QuizActivity : AppCompatActivity() {
                         .create()
                         .show()
                 }
-
-                // Increase the index by 1 until it's equal to the number of elements in the HashSet
-                index++
             }
             // State if there's any action to be taken when data cannot be retrieved or an error occurs
             override fun onCancelled(error: DatabaseError) {
