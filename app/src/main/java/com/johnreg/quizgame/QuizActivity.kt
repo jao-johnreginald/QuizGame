@@ -160,14 +160,14 @@ class QuizActivity : AppCompatActivity() {
                     binding.tvC.text = answerC
                     binding.tvD.text = answerD
 
-                    // The ProgressBar should now disappear and the components should be VISIBLE
-                    hidePbAndShowLayouts()
-
                     // The timer will start only after the data is done being retrieved
                     startTimer()
 
                     // Increase the index by 1 until it's equal to the number of elements in the HashSet
                     index++
+
+                    // The ProgressBar should now disappear and the components should be VISIBLE
+                    hidePbAndShowLayouts()
                 } else {
                     // When all the questions are finished, show a dialog window to the user
                     showDialog()
