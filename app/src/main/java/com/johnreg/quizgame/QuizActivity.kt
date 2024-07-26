@@ -30,13 +30,7 @@ class QuizActivity : AppCompatActivity() {
     private val dataRefScores = data.reference.child("scores")
 
     // Create the variables that we will assign when we retrieve the data out of the database
-    private var question = ""
-    private var answerA = ""
-    private var answerB = ""
-    private var answerC = ""
-    private var answerD = ""
     private var correctAnswer = ""
-    private var questionCount = 0
 
     // Create other containers that hold the number of correct and incorrect answers of the user
     private var userCorrect = 0
@@ -144,7 +138,7 @@ class QuizActivity : AppCompatActivity() {
             // Perform data retrieving, also constantly monitors the database live
             override fun onDataChange(snapshot: DataSnapshot) {
                 // Learn the total number of questions, using the snapshot object
-                questionCount = snapshot.childrenCount.toInt()
+                val questionCount = snapshot.childrenCount.toInt()
 
                 // Continue the quiz until the index equals the questions.size, otherwise end the quiz
                 if (index < questions.size) {
@@ -152,11 +146,11 @@ class QuizActivity : AppCompatActivity() {
                     val element = questions.elementAt(index)
 
                     // Retrieve all the data under the element
-                    question = snapshot.child("$element").child("q").value.toString()
-                    answerA = snapshot.child("$element").child("a").value.toString()
-                    answerB = snapshot.child("$element").child("b").value.toString()
-                    answerC = snapshot.child("$element").child("c").value.toString()
-                    answerD = snapshot.child("$element").child("d").value.toString()
+                    val question = snapshot.child("$element").child("q").value.toString()
+                    val answerA = snapshot.child("$element").child("a").value.toString()
+                    val answerB = snapshot.child("$element").child("b").value.toString()
+                    val answerC = snapshot.child("$element").child("c").value.toString()
+                    val answerD = snapshot.child("$element").child("d").value.toString()
                     correctAnswer = snapshot.child("$element").child("answer").value.toString()
 
                     // Print the data under the element
