@@ -161,10 +161,7 @@ class QuizActivity : AppCompatActivity() {
                     binding.tvD.text = answerD
 
                     // The ProgressBar should now disappear and the components should be VISIBLE
-                    binding.pbQuiz.visibility = View.INVISIBLE
-                    binding.layoutInfo.visibility = View.VISIBLE
-                    binding.layoutQuestion.visibility = View.VISIBLE
-                    binding.layoutButtons.visibility = View.VISIBLE
+                    hidePbAndShowLayouts()
 
                     // The timer will start only after the data is done being retrieved
                     startTimer()
@@ -173,22 +170,7 @@ class QuizActivity : AppCompatActivity() {
                     index++
                 } else {
                     // When all the questions are finished, show a dialog window to the user
-                    AlertDialog.Builder(this@QuizActivity)
-                        .setTitle("Quiz Game")
-                        .setMessage("Congratulations!!!\nYou have answered all the questions. Do you want to see the result?")
-                        .setCancelable(false)
-                        .setPositiveButton("See Result") { _, _ ->
-                            // Save the user's score in the database and open the ResultActivity
-                            sendScore()
-                        }
-                        .setNegativeButton("Play Again") { _, _ ->
-                            // Close this page and open the MainActivity
-                            val intent = Intent(this@QuizActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                        .create()
-                        .show()
+                    showDialog()
                 }
             }
             // State if there's any action to be taken when data cannot be retrieved or an error occurs
@@ -196,6 +178,32 @@ class QuizActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun hidePbAndShowLayouts() {
+        binding.pbQuiz.visibility = View.INVISIBLE
+        binding.layoutInfo.visibility = View.VISIBLE
+        binding.layoutQuestion.visibility = View.VISIBLE
+        binding.layoutButtons.visibility = View.VISIBLE
+    }
+
+    private fun showDialog() {
+        AlertDialog.Builder(this@QuizActivity)
+            .setTitle("Quiz Game")
+            .setMessage("Congratulations!!!\nYou have answered all the questions. Do you want to see the result?")
+            .setCancelable(false)
+            .setPositiveButton("See Result") { _, _ ->
+                // Save the user's score in the database and open the ResultActivity
+                sendScore()
+            }
+            .setNegativeButton("Play Again") { _, _ ->
+                // Close this page and open the MainActivity
+                val intent = Intent(this@QuizActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .create()
+            .show()
     }
 
     private fun disableClickableOfOptions() {
