@@ -94,12 +94,7 @@ class QuizActivity : AppCompatActivity() {
         binding.tvC.setOnClickListener { onAnswerClicked("c", binding.tvC) }
         binding.tvD.setOnClickListener { onAnswerClicked("d", binding.tvD) }
 
-        binding.btnNext.setOnClickListener {
-            // Before the gameLogic (startTimer) function, the timer needs to be reset
-            resetTimer()
-            // Call the gameLogic function again when the user clicks the 'next' Button
-            gameLogic()
-        }
+        binding.btnNext.setOnClickListener { onNextButtonClicked() }
         binding.btnFinish.setOnClickListener { sendScore() }
     }
 
@@ -130,11 +125,25 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    // Retrieve the data in this function
-    private fun gameLogic() {
+    private fun onNextButtonClicked() {
+        // Before the retrieveData (startTimer) function, the timer needs to be reset
+        resetTimer()
+
         // The marking colors must be restored and the options must be clickable
         restoreOptions()
 
+        // Continue the quiz until the index equals the questions.size, otherwise end the quiz
+        if (index < questions.size) {
+            // Call the retrieveData function again when the user clicks the 'next' Button
+            retrieveData()
+        } else {
+            // When all the questions are finished, show a dialog window to the user
+            showDialog()
+        }
+    }
+
+    // Retrieve the data in this function
+    private fun gameLogic() {
         // Use the DatabaseReference object created above and the ValueEventListener interface
         dataRefQuestions.addValueEventListener(object : ValueEventListener {
             // Perform data retrieving, also constantly monitors the database live
@@ -144,16 +153,10 @@ class QuizActivity : AppCompatActivity() {
                 // Learn the total number of questions, using the snapshot object
                 val questionCount = dataSnapshot.childrenCount.toInt()
 
-                // Continue the quiz until the index equals the questions.size, otherwise end the quiz
-                if (index < questions.size) {
-                    retrieveData()
+                retrieveData()
 
-                    // The ProgressBar should now disappear and the components should be VISIBLE
-                    hidePbAndShowLayouts()
-                } else {
-                    // When all the questions are finished, show a dialog window to the user
-                    showDialog()
-                }
+                // The ProgressBar should now disappear and the components should be VISIBLE
+                hidePbAndShowLayouts()
             }
             // State if there's any action to be taken when data cannot be retrieved or an error occurs
             override fun onCancelled(error: DatabaseError) {
