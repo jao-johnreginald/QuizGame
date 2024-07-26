@@ -29,6 +29,8 @@ class QuizActivity : AppCompatActivity() {
     private val dataRefQuestions = data.reference.child("questions")
     private val dataRefScores = data.reference.child("scores")
 
+    private lateinit var dataSnapshot: DataSnapshot
+
     // Create the variables that we will assign when we retrieve the data out of the database
     private var correctAnswer = ""
 
@@ -137,8 +139,10 @@ class QuizActivity : AppCompatActivity() {
         dataRefQuestions.addValueEventListener(object : ValueEventListener {
             // Perform data retrieving, also constantly monitors the database live
             override fun onDataChange(snapshot: DataSnapshot) {
+                dataSnapshot = snapshot
+
                 // Learn the total number of questions, using the snapshot object
-                val questionCount = snapshot.childrenCount.toInt()
+                val questionCount = dataSnapshot.childrenCount.toInt()
 
                 // Continue the quiz until the index equals the questions.size, otherwise end the quiz
                 if (index < questions.size) {
@@ -163,12 +167,12 @@ class QuizActivity : AppCompatActivity() {
         val element = questions.elementAt(index)
 
         // Retrieve all the data under the element
-        val question = snapshot.child("$element").child("q").value.toString()
-        val answerA = snapshot.child("$element").child("a").value.toString()
-        val answerB = snapshot.child("$element").child("b").value.toString()
-        val answerC = snapshot.child("$element").child("c").value.toString()
-        val answerD = snapshot.child("$element").child("d").value.toString()
-        correctAnswer = snapshot.child("$element").child("answer").value.toString()
+        val question = dataSnapshot.child("$element").child("q").value.toString()
+        val answerA = dataSnapshot.child("$element").child("a").value.toString()
+        val answerB = dataSnapshot.child("$element").child("b").value.toString()
+        val answerC = dataSnapshot.child("$element").child("c").value.toString()
+        val answerD = dataSnapshot.child("$element").child("d").value.toString()
+        correctAnswer = dataSnapshot.child("$element").child("answer").value.toString()
 
         // Print the data under the element
         binding.tvQuestion.text = question
