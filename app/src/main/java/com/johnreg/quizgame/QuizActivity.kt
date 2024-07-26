@@ -146,7 +146,7 @@ class QuizActivity : AppCompatActivity() {
 
                 // Continue the quiz until the index equals the questions.size, otherwise end the quiz
                 if (index < questions.size) {
-                    retrieveData(snapshot)
+                    retrieveData()
 
                     // The ProgressBar should now disappear and the components should be VISIBLE
                     hidePbAndShowLayouts()
@@ -162,7 +162,7 @@ class QuizActivity : AppCompatActivity() {
         })
     }
 
-    private fun retrieveData(snapshot: DataSnapshot) {
+    private fun retrieveData() {
         // Reach the elements of the HashSet array using the index variable
         val element = questions.elementAt(index)
 
