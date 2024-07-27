@@ -95,14 +95,15 @@ class QuizActivity : AppCompatActivity() {
     private fun initializeHashSet() {
         // Learn the total number of questions, using the dataSnapshot object
         val questionCount = dataSnapshot.childrenCount.toInt()
+        Log.d("NumberOfQuestionsInDB", questionCount.toString())
 
         // Continue to generate random numbers until the questions.size is QUESTIONS_TO_SHOW
         do {
             // Generate a random number between 1 and questionCount
             val number = Random.nextInt(1, questionCount + 1)
+            Log.d("NumberGenerated", number.toString())
             // Pass this number to the HashSet of questions
             questions.add(number)
-            Log.d("NumberGenerated", number.toString())
         } while (questions.size < QUESTIONS_TO_SHOW)
         Log.d("NumberHashSet", questions.toString())
     }
