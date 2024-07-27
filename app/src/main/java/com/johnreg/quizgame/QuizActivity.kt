@@ -78,9 +78,6 @@ class QuizActivity : AppCompatActivity() {
                 dataSnapshot = snapshot
                 initializeHashSet()
 
-                // Learn the total number of questions, using the dataSnapshot object
-                val questionCount = dataSnapshot.childrenCount.toInt()
-
                 // Call the retrieveData function after initializing the DataSnapshot and HashSet
                 retrieveData()
 
@@ -96,10 +93,13 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initializeHashSet() {
+        // Learn the total number of questions, using the dataSnapshot object
+        val questionCount = dataSnapshot.childrenCount.toInt()
+
         // Continue to generate random numbers until the questions.size is QUESTIONS_TO_SHOW
         do {
             // Generate a random number between 1 and questionCount
-            val number = Random.nextInt(1, 11)
+            val number = Random.nextInt(1, questionCount + 1)
             // Pass this number to the HashSet of questions
             questions.add(number)
             Log.d("NumberGenerated", number.toString())
