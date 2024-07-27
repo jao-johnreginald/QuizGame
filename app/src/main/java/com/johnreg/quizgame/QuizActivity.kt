@@ -31,6 +31,11 @@ class QuizActivity : AppCompatActivity() {
 
     private lateinit var dataSnapshot: DataSnapshot
 
+    // HashSet only considers one of the same elements ignoring all others
+    // Create an array from the HashSet class and transfer the randomly generated numbers to this array
+    private val questions: HashSet<Int> = HashSet()
+    private var index = 0
+
     // Create the variables that we will assign when we retrieve the data out of the database
     private var correctAnswer = ""
 
@@ -48,11 +53,6 @@ class QuizActivity : AppCompatActivity() {
     // Reach some information such as the email and the userUID of the user who logs in to the application
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
-
-    // HashSet only considers one of the same elements ignoring all others
-    // Create an array from the HashSet class and transfer the randomly generated numbers to this array
-    private val questions: HashSet<Int> = HashSet()
-    private var index = 0
 
     companion object {
         const val QUESTIONS_TO_SHOW = 5
