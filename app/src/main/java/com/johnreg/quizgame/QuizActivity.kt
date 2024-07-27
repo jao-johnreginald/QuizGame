@@ -69,7 +69,30 @@ class QuizActivity : AppCompatActivity() {
         setListenersAndTexts()
         initializeHashSet()
         // Call the gameLogic function in the onCreate function
-        gameLogic()
+        initializeDataSnapshot()
+    }
+
+    // Retrieve the data in this function
+    private fun initializeDataSnapshot() {
+        // Use the DatabaseReference object created above and the ValueEventListener interface
+        dataRefQuestions.addValueEventListener(object : ValueEventListener {
+            // Perform data retrieving, also constantly monitors the database live
+            override fun onDataChange(snapshot: DataSnapshot) {
+                dataSnapshot = snapshot
+
+                // Learn the total number of questions, using the snapshot object
+                val questionCount = dataSnapshot.childrenCount.toInt()
+
+                retrieveData()
+
+                // The ProgressBar should now disappear and the components should be VISIBLE
+                hidePbAndShowLayouts()
+            }
+            // State if there's any action to be taken when data cannot be retrieved or an error occurs
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun initializeHashSet() {
@@ -140,29 +163,6 @@ class QuizActivity : AppCompatActivity() {
             // When all the questions are finished, show a dialog window to the user
             showDialog()
         }
-    }
-
-    // Retrieve the data in this function
-    private fun gameLogic() {
-        // Use the DatabaseReference object created above and the ValueEventListener interface
-        dataRefQuestions.addValueEventListener(object : ValueEventListener {
-            // Perform data retrieving, also constantly monitors the database live
-            override fun onDataChange(snapshot: DataSnapshot) {
-                dataSnapshot = snapshot
-
-                // Learn the total number of questions, using the snapshot object
-                val questionCount = dataSnapshot.childrenCount.toInt()
-
-                retrieveData()
-
-                // The ProgressBar should now disappear and the components should be VISIBLE
-                hidePbAndShowLayouts()
-            }
-            // State if there's any action to be taken when data cannot be retrieved or an error occurs
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
-            }
-        })
     }
 
     private fun retrieveData() {
