@@ -108,6 +108,39 @@ class QuizActivity : AppCompatActivity() {
         Log.d("NumberHashSet", questions.toString())
     }
 
+    private fun retrieveData() {
+        // Reach the elements of the HashSet array using the index variable
+        val element = questions.elementAt(index)
+
+        // Retrieve all the data under the element
+        val question = dataSnapshot.child("$element").child("q").value.toString()
+        val answerA = dataSnapshot.child("$element").child("a").value.toString()
+        val answerB = dataSnapshot.child("$element").child("b").value.toString()
+        val answerC = dataSnapshot.child("$element").child("c").value.toString()
+        val answerD = dataSnapshot.child("$element").child("d").value.toString()
+        correctAnswer = dataSnapshot.child("$element").child("answer").value.toString()
+
+        // Print the data under the element
+        binding.tvQuestion.text = question
+        binding.tvA.text = answerA
+        binding.tvB.text = answerB
+        binding.tvC.text = answerC
+        binding.tvD.text = answerD
+
+        // The timer will start only after the data is done being retrieved
+        startTimer()
+
+        // Increase the index by 1 until it's equal to the number of elements in the HashSet
+        index++
+    }
+
+    private fun hidePbAndShowLayouts() {
+        binding.pbQuiz.visibility = View.INVISIBLE
+        binding.layoutInfo.visibility = View.VISIBLE
+        binding.layoutQuestion.visibility = View.VISIBLE
+        binding.layoutButtons.visibility = View.VISIBLE
+    }
+
     private fun setListenersAndTexts() {
         // Print the initial value of userCorrect and userWrong
         binding.tvCorrect.text = userCorrect.toString()
@@ -164,39 +197,6 @@ class QuizActivity : AppCompatActivity() {
             // When all the questions are finished, show a dialog window to the user
             showDialog()
         }
-    }
-
-    private fun retrieveData() {
-        // Reach the elements of the HashSet array using the index variable
-        val element = questions.elementAt(index)
-
-        // Retrieve all the data under the element
-        val question = dataSnapshot.child("$element").child("q").value.toString()
-        val answerA = dataSnapshot.child("$element").child("a").value.toString()
-        val answerB = dataSnapshot.child("$element").child("b").value.toString()
-        val answerC = dataSnapshot.child("$element").child("c").value.toString()
-        val answerD = dataSnapshot.child("$element").child("d").value.toString()
-        correctAnswer = dataSnapshot.child("$element").child("answer").value.toString()
-
-        // Print the data under the element
-        binding.tvQuestion.text = question
-        binding.tvA.text = answerA
-        binding.tvB.text = answerB
-        binding.tvC.text = answerC
-        binding.tvD.text = answerD
-
-        // The timer will start only after the data is done being retrieved
-        startTimer()
-
-        // Increase the index by 1 until it's equal to the number of elements in the HashSet
-        index++
-    }
-
-    private fun hidePbAndShowLayouts() {
-        binding.pbQuiz.visibility = View.INVISIBLE
-        binding.layoutInfo.visibility = View.VISIBLE
-        binding.layoutQuestion.visibility = View.VISIBLE
-        binding.layoutButtons.visibility = View.VISIBLE
     }
 
     private fun showDialog() {
