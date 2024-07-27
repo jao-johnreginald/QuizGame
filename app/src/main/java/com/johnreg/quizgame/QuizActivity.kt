@@ -202,7 +202,9 @@ class QuizActivity : AppCompatActivity() {
     private fun showDialog() {
         AlertDialog.Builder(this@QuizActivity)
             .setTitle("Quiz Game")
-            .setMessage("Congratulations!!!\nYou have answered all the questions. Do you want to see the result?")
+            .setMessage(
+                "Congratulations!!!\nYou have answered all the questions. Do you want to see the result?"
+            )
             .setCancelable(false)
             .setPositiveButton("See Result") { _, _ ->
                 // Save the user's score in the database and open the ResultActivity
