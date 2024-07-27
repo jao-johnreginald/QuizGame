@@ -66,8 +66,6 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setListenersAndTexts()
-        initializeHashSet()
         initializeDataSnapshot()
     }
 
@@ -78,6 +76,7 @@ class QuizActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 // Retrieve the data through the snapshot object created from the DataSnapshot class
                 dataSnapshot = snapshot
+                initializeHashSet()
 
                 // Learn the total number of questions, using the dataSnapshot object
                 val questionCount = dataSnapshot.childrenCount.toInt()
@@ -87,6 +86,7 @@ class QuizActivity : AppCompatActivity() {
 
                 // The ProgressBar should now disappear and the components should be VISIBLE
                 hidePbAndShowLayouts()
+                setListenersAndTexts()
             }
             // State if there's any action to be taken when data cannot be retrieved or an error occurs
             override fun onCancelled(error: DatabaseError) {
