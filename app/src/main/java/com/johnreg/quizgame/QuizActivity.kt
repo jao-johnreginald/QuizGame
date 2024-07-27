@@ -68,21 +68,21 @@ class QuizActivity : AppCompatActivity() {
 
         setListenersAndTexts()
         initializeHashSet()
-        // Call the gameLogic function in the onCreate function
         initializeDataSnapshot()
     }
 
-    // Retrieve the data in this function
     private fun initializeDataSnapshot() {
         // Use the DatabaseReference object created above and the ValueEventListener interface
         dataRefQuestions.addValueEventListener(object : ValueEventListener {
             // Perform data retrieving, also constantly monitors the database live
             override fun onDataChange(snapshot: DataSnapshot) {
+                // Retrieve the data through the snapshot object created from the DataSnapshot class
                 dataSnapshot = snapshot
 
-                // Learn the total number of questions, using the snapshot object
+                // Learn the total number of questions, using the dataSnapshot object
                 val questionCount = dataSnapshot.childrenCount.toInt()
 
+                // Call the retrieveData function after initializing the DataSnapshot and HashSet
                 retrieveData()
 
                 // The ProgressBar should now disappear and the components should be VISIBLE
@@ -96,9 +96,9 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initializeHashSet() {
-        // Generate random numbers until the number of elements in the 'questions' array is QUESTIONS_TO_SHOW
+        // Continue to generate random numbers until the questions.size is QUESTIONS_TO_SHOW
         do {
-            // Generate a random number between 1 and 10
+            // Generate a random number between 1 and questionCount
             val number = Random.nextInt(1, 11)
             // Pass this number to the HashSet of questions
             questions.add(number)
