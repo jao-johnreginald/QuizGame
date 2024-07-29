@@ -22,10 +22,6 @@ class ResultActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
-    // Create 2 variables that will keep the data in it when we retrieveData()
-    private var userCorrect = ""
-    private var userWrong = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
@@ -53,8 +49,8 @@ class ResultActivity : AppCompatActivity() {
                     val userUID = user.uid
 
                     // Retrieve the data using the snapshot object
-                    userCorrect = snapshot.child(userUID).child("correct").value.toString()
-                    userWrong = snapshot.child(userUID).child("wrong").value.toString()
+                    val userCorrect = snapshot.child(userUID).child("correct").value.toString()
+                    val userWrong = snapshot.child(userUID).child("wrong").value.toString()
 
                     // Write these values on the TextView
                     binding.tvScoreCorrect.text = userCorrect
