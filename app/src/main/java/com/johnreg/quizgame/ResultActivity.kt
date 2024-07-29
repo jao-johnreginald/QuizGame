@@ -46,11 +46,11 @@ class ResultActivity : AppCompatActivity() {
                 // Check whether the user object is null with the 'let' keyword
                 user?.let { user ->
                     // Create a new variable to hold the userUID code
-                    val userUID = user.uid
+                    val uid = user.uid
 
                     // Retrieve the data using the snapshot object
-                    val userCorrect = snapshot.child(userUID).child("correct").value.toString()
-                    val userWrong = snapshot.child(userUID).child("wrong").value.toString()
+                    val userCorrect = snapshot.child(uid).child("correct").value.toString()
+                    val userWrong = snapshot.child(uid).child("wrong").value.toString()
 
                     // Write these values on the TextView
                     binding.tvScoreCorrect.text = userCorrect
