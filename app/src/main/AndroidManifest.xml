@@ -37,6 +37,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".WelcomeActivity"
@@ -51,6 +52,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/SignupTheme" />
     </application>
 
