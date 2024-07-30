@@ -22,14 +22,14 @@ class QuizActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQuizBinding
 
+    private lateinit var dataSnapshot: DataSnapshot
+
     // Get the FirebaseDatabase instance
     private val data = FirebaseDatabase.getInstance()
 
     // Reach the data under the 'questions' and 'scores' child using the FirebaseDatabase instance
     private val dataRefQuestions = data.reference.child("questions")
     private val dataRefScores = data.reference.child("scores")
-
-    private lateinit var dataSnapshot: DataSnapshot
 
     // HashSet only considers one of the same elements ignoring all others
     // Create an array from the HashSet class and transfer the randomly generated numbers to this array
