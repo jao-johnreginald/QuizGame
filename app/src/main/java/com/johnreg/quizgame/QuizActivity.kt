@@ -54,13 +54,6 @@ class QuizActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
-    companion object {
-        const val QUESTIONS_TO_SHOW = 5
-        // Create a Long container to determine the initial value of time
-        // Define time in milliseconds in kotlin, in programming time is usually defined by Long
-        const val TOTAL_TIME = 30000L
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizBinding.inflate(layoutInflater)
@@ -304,6 +297,13 @@ class QuizActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        // Control the size of the questions array
+        const val QUESTIONS_TO_SHOW = 5
+        // Determine the initial value of time, use Long to define time in milliseconds
+        const val TOTAL_TIME = 30000L
     }
 
 }
