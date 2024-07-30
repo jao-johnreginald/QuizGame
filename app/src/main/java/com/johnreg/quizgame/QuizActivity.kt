@@ -93,7 +93,7 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initializeHashSet() {
-        // Learn the total number of questions, using the dataSnapshot object
+        // Learn the total number of questions (in the database), using the dataSnapshot object
         val questionCount = dataSnapshot.childrenCount.toInt()
         Log.d("NumberOfQuestionsInDB", questionCount.toString())
 
