@@ -32,25 +32,24 @@ class QuizActivity : AppCompatActivity() {
     private val dataRefScores = data.reference.child("scores")
 
     // HashSet only considers one of the same elements ignoring all others
-    // Create an array from the HashSet class and transfer the randomly generated numbers to this array
+    // Transfer the randomly generated numbers to this array
     private val questions: HashSet<Int> = HashSet()
     private var index = 0
 
-    // Create the variables that we will assign when we retrieve the data out of the database
+    // Assign when retrieving the data out of the database
     private var correctAnswer = ""
 
-    // Create other containers that hold the number of correct and incorrect answers of the user
+    // Hold the number of correct and incorrect answers of the user
     private var userCorrect = 0
     private var userWrong = 0
 
-    // There is an abstract class in kotlin that we can use for the timer
-    // Its name is CountDownTimer class, call this class and create an object from this class
+    // Use the CountDownTimer abstract class for the timer
     private lateinit var timer: CountDownTimer
 
-    // Use the leftTime value in the code, for now equal the initial value
+    // Use the leftTime value in startTimer(), for now equal the initial value
     private var leftTime = TOTAL_TIME
 
-    // Reach some information such as the email and the userUID of the user who logs in to the application
+    // Reach the user.uid code assigned for this user with the user object
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
@@ -300,7 +299,7 @@ class QuizActivity : AppCompatActivity() {
     }
 
     companion object {
-        // Control the size of the questions array
+        // Control the size of the questions array, (the number of QUESTIONS_TO_SHOW to the user)
         const val QUESTIONS_TO_SHOW = 5
         // Determine the initial value of time, use Long to define time in milliseconds
         const val TOTAL_TIME = 30000L
