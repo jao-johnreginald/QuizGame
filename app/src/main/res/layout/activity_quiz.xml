@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange_500"
     tools:context=".QuizActivity">
 
     <LinearLayout
         android:id="@+id/layout_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:background="?attr/colorPrimaryContainer"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/time"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimarySurface"
             android:textSize="16sp" />
 
         <TextView
@@ -34,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimarySurface"
             android:textSize="16sp"
             tools:text="60" />
 
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/correct_answer"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimarySurface"
             android:textSize="16sp" />
 
         <TextView
@@ -51,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimarySurface"
             android:textSize="16sp"
             tools:text="0" />
 
@@ -60,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/wrong_answer"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimarySurface"
             android:textSize="16sp" />
 
         <TextView
@@ -68,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimarySurface"
             android:textSize="16sp"
             tools:text="0" />
     </LinearLayout>
@@ -76,7 +75,6 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +84,7 @@
             android:id="@+id/layout_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="invisible"
@@ -93,58 +92,43 @@
 
             <TextView
                 android:id="@+id/tv_question"
+                style="@style/QuizText"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="10dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:padding="3dp"
-                android:textColor="@color/black"
-                android:textSize="24sp"
+                android:paddingHorizontal="24dp"
                 tools:text="TextView" />
 
             <TextView
                 android:id="@+id/tv_a"
+                style="@style/QuizText"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
                 tools:text="TextView" />
 
             <TextView
                 android:id="@+id/tv_b"
+                style="@style/QuizText"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
                 tools:text="TextView" />
 
             <TextView
                 android:id="@+id/tv_c"
+                style="@style/QuizText"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
                 tools:text="TextView" />
 
             <TextView
                 android:id="@+id/tv_d"
+                style="@style/QuizText"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
                 tools:text="TextView" />
 
             <LinearLayout
@@ -163,9 +147,9 @@
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="?attr/colorPrimaryContainer"
                     android:text="@string/finish"
-                    android:textColor="@color/orange_500"
+                    android:textColor="?attr/colorPrimarySurface"
                     android:textSize="18sp" />
 
                 <Button
@@ -174,9 +158,9 @@
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="?attr/colorPrimaryContainer"
                     android:text="@string/next"
-                    android:textColor="@color/orange_500"
+                    android:textColor="?attr/colorPrimarySurface"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>

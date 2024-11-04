@@ -221,10 +221,10 @@ class QuizActivity : AppCompatActivity() {
 
     private fun restoreOptions() {
         // Change the background color of the TextViews to WHITE
-        binding.tvA.setBackgroundColor(Color.WHITE)
-        binding.tvB.setBackgroundColor(Color.WHITE)
-        binding.tvC.setBackgroundColor(Color.WHITE)
-        binding.tvD.setBackgroundColor(Color.WHITE)
+        binding.tvA.setBackgroundResource(R.drawable.text_background)
+        binding.tvB.setBackgroundResource(R.drawable.text_background)
+        binding.tvC.setBackgroundResource(R.drawable.text_background)
+        binding.tvD.setBackgroundResource(R.drawable.text_background)
 
         // Make those options clickable
         binding.tvA.isClickable = true
