@@ -27,7 +27,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun setAnimation() {
         val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.splash_anim)
-        binding.tvSplash.startAnimation(animation)
+        binding.ivSplash.startAnimation(animation)
     }
 
     // After the animation, WelcomeActivity should close and MainActivity should open
