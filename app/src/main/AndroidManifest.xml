@@ -17,28 +17,23 @@
         <activity
             android:name=".ResultActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/SignupTheme" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".QuizActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/SignupTheme" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false"
-            android:parentActivityName=".LoginActivity"
-            android:theme="@style/SignupTheme" />
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".SignupActivity"
             android:exported="false"
-            android:parentActivityName=".LoginActivity"
-            android:theme="@style/SignupTheme" />
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeSplash" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="true"
@@ -52,8 +47,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/SignupTheme" />
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
