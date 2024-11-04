@@ -1,17 +1,18 @@
 [versions]
-agp = "8.5.1"
-kotlin = "1.9.0"
-coreKtx = "1.13.1"
+agp = "8.6.1"
+kotlin = "2.0.21"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
-activity = "1.9.1"
-constraintlayout = "2.1.4"
-firebaseBom = "33.1.2"
+activity = "1.9.3"
+constraintlayout = "2.2.0"
+firebaseBom = "33.5.1"
 firebaseDatabaseKtx = "21.0.0"
 playServicesAuth = "21.2.0"
+google-services = "4.4.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,4 +34,5 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
 

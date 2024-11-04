@@ -2,17 +2,17 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     // Add the Google services Gradle plugin
-    id("com.google.gms.google-services")
+    alias(libs.plugins.googleServices)
 }
 
 android {
     namespace = "com.johnreg.quizgame"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.johnreg.quizgame"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
