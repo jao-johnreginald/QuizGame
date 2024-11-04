@@ -12,7 +12,7 @@ constraintlayout = "2.2.0"
 firebaseBom = "33.5.1"
 firebaseDatabaseKtx = "21.0.0"
 playServicesAuth = "21.2.0"
-google-services = "4.4.2"
+googleServices = "4.4.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,5 +34,5 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-googleServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 
