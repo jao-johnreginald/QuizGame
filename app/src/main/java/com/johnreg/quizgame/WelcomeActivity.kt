@@ -31,7 +31,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     // After the animation, WelcomeActivity should close and MainActivity should open
-    // Create a Handler, process takes 5000 milliseconds or 5 seconds, then execute the codes
+    // Create a Handler, process takes DELAY_MILLIS long, then execute the codes
     private fun setHandler() {
         Handler(Looper.getMainLooper()).postDelayed({
             // If user is logged out -> start LoginActivity, else -> start MainActivity
@@ -45,7 +45,11 @@ class WelcomeActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }, 5000)
+        }, DELAY_MILLIS)
+    }
+
+    companion object {
+        private const val DELAY_MILLIS = 3000L
     }
 
 }
